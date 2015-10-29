@@ -15,8 +15,6 @@ function connect(){
 
     if(!$conn){
         die('Error: Could not connect to database.');
-    }else {
-        echo 'conncted';
     }
 }
 
@@ -28,8 +26,5 @@ function close(){
         echo 'closed con';
     }
 }
-
-//connect();
-//close();
 
 ?>
