@@ -7,9 +7,7 @@ $membership = new Membership();
 
 function login($email, $password){
     global $membership;
-    if(!empty($email) && !empty($password)){
-        $response = $membership->login($_POST['email'], $_POST['password']);
-    }
+    $response = $membership->login($email, $password);
 }
 
 function logout(){
