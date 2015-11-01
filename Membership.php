@@ -7,7 +7,7 @@ class Membership
     function login($email, $password){
       if($this->validateUser($email, $password)){
           $_SESSION['status'] = 'authorized';
-          header("location: profile.html");
+          header("location: profilepage.html");
       }else{
           return "Please enter a correct email and password";
       }
