@@ -44,14 +44,14 @@
         }
 
         if(!$_POST['major']){
-            $errorPassword = 'Please select a major';
+            $errorMajor = 'Please select a major';
         }
 
         if(!$_POST['universityID']){
             $errorPassword = 'Please select a university';
         }
 
-        if(!$errorName && !$errorEmail && !$errorPassword && !$major && !$universityID){
+        if(!$errorName && !$errorEmail && !$errorPassword && !$errorMajor && !$universityID){
             createUser($name, $email, $password, $major, $universityID);
         }
     }
