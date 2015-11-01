@@ -25,7 +25,7 @@
 </head>
 
 <body>
-
+<?php include 'HomePage.php';?>
 <div class="header">
     <table align="center" width=100%>
         <tr> <!-- ROW -->
@@ -77,39 +77,50 @@
             <br>
             <h1 class="text-center login-title">Sign in</h1>
             <br>
-            <div class="form-group">
-                <label for="email">Email:</label>
-                <input type="text" class="form-control" id="email" placeholder="Email Address">
-                <br>
-                <label for="pwd">Password:</label>
-                <input type="text" class="form-control" id="pwd" placeholder="Password">
-            </div>
-            <a href="test.html"><button class="btn btn-lg btn-primary btn-block" type="submit">
-                Sign in
-            </button></a>
+            <form class="form-horizontal" role="form" method="post" action="HomePage.php">
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="text" class="form-control" id="email" placeholder="Email Address" >
+                </div>
+                <div class="form-group">
+                    <label for="pwd">Password:</label>
+                    <input type="text" class="form-control" id="pwd" placeholder="Password">
+                </div>
+                <a href="test.html"><button class="btn btn-lg btn-primary btn-block" type="submit">
+                    Sign in
+                </button></a>
         </div>
         <div class="col-md-5" style="padding-left:40px; border-left: 1px solid #ccc;">
             <br>
             <h1 class="text-center login-title">New User? Sign Up!</h1>
             <br>
-            <div class="form-group">
-                <label for="name">Full name:</label>
-                <input type="text" class="form-control" id="name" placeholder="Full name">
+            <form class="form-horizontal" role="form" method="post" action="HomePage.php">
+                <div class="form-group">
+                    <label for="name">Full name:</label>
+                    <input type="text" class="form-control" id="name" placeholder="Full name" value="<?php echo htmlspecialchars($_POST['name']); ?>">
+                    <?php echo "<p class='text-danger'>$errorName</p>";?>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="text" class="form-control" id="email" placeholder="Email Address" value="<?php echo htmlspecialchars($_POST['email']); ?>">
+                    <?php echo "<p class='text-danger'>$errorEmail</p>";?>
+                    </div>
+                <div class="form-group">
+                    <label for="pwd">Password:</label>
+                    <input type="text" class="form-control" id="pwd" placeholder="Password" value="<?php echo htmlspecialchars($_POST['password']); ?>">
+                    <?php echo "<p class='text-danger'>$errorPassword</p>";?>
+                    </div>
+                <div class="form-group">
+                    <label for="major">Major:</label>
+                    <input type="text" class="form-control" id="major" placeholder="Major" value="<?php echo htmlspecialchars($_POST['major']); ?>">
+                    <?php echo "<p class='text-danger'>$errorMajor</p>";?>
+                </div>
+                <a href="test.html"><button class="btn btn-lg btn-primary btn-block" type="createUser">
+                    Register
+                </button></a>
                 <br>
-                <label for="email">Email:</label>
-                <input type="text" class="form-control" id="email" placeholder="Email Address">
                 <br>
-                <label for="pwd">Password:</label>
-                <input type="text" class="form-control" id="pwd" placeholder="Password">
-                <br>
-                <label for="mamor">Major:</label>
-                <input type="text" class="form-control" id="major" placeholder="Major">
-            </div>
-            <a href="test.html"><button class="btn btn-lg btn-primary btn-block" type="submit">
-                Register
-            </button></a>
-            <br>
-            <br>
+            </form>
         </div>
         <div class="col-md-1">
         </div>
