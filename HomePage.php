@@ -24,4 +24,35 @@
         close();
     }
 
+    if(isset($_POST['createUser'])){
+        $name = $_POST['name'];
+        $email = $_POST['email'];
+        $password = $_POST['password'];
+        $major = $_POST['major'];
+        $universityID = $_POST['universityID'];
+
+        if(!$_POST['name']){
+            $errorName = 'Please enter your name';
+        }
+
+        if(!$_POST['email'] || !filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)){
+            $errorEmail = 'Please enter a valid email';
+        }
+
+        if(!$_POST['password']){
+            $errorPassword = 'Please enter a passsword';
+        }
+
+        if(!$_POST['major']){
+            $errorPassword = 'Please select a major';
+        }
+
+        if(!$_POST['universityID']){
+            $errorPassword = 'Please select a university';
+        }
+
+        if(!$errorName && !$errorEmail && !$errorPassword && !$major && !$universityID){
+            createUser($name, $email, $password, $major, $universityID);
+        }
+    }
 ?>

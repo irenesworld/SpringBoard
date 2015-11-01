@@ -15,4 +15,8 @@ function logout(){
     $membership->logout();
 }
 
+if(isset($_POST['login'])){
+    login($_POST['email'],$_POST['password']);
+}
+
 ?>
