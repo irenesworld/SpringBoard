@@ -56,7 +56,7 @@ $nameError = "";    $emailError = "";   $pwdError = "";  $majorError = "";  $uni
 
 if(isset($_POST['register']))
 {
-    echo "aaaay";
+    echo "aaaay ";
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "haaaaaaaaay";
         if (empty($_POST["name"])) {
