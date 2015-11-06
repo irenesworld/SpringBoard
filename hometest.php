@@ -20,8 +20,8 @@
 // - $_SERVER["PHP_SELF"] is a super global variable that returns the filename
 //   of the currently executing script
 
-require 'connect.php';
-//require 'login.php';
+require_once 'connect.php';
+require 'login.php';
 
 $check_login = "";
 $check_register = "";
@@ -46,7 +46,7 @@ if(isset($_POST['signin'])) {
             $loginPwd = htmlspecialchars($_POST["loginPwd"]);
         }
 
-        login("loginEmail", "loginPwd");
+        login($loginEmail, $loginPwd);
     }
 }
 
@@ -110,9 +110,7 @@ function createUser($name, $email, $password, $major, $universityID){
     mysqli_stmt_bind_param($statment, 'sssisi', $email, $password, $name, $votes, $major, $uni);
     mysqli_stmt_execute($statment);
 
-    if(mysqli_stmt_num_rows($statment) > 0){
-        login($email, $password);
-    }
+    login($email, $password);
 
     mysqli_stmt_close($statment);
     close();

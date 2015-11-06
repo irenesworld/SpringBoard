@@ -22,9 +22,6 @@ function close(){
     global $conn;
     $conn = null;
 
-    if(!$conn){
-        echo 'closed con';
-    }
 }
 
 ?>

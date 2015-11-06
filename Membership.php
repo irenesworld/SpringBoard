@@ -1,23 +1,21 @@
 <?php
 
-require 'connect.php';
+require_once 'connect.php';
+
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
 class Membership
 {
-    function login($email, $password){
-      if($this->validateUser($email, $password)){
-          $_SESSION['status'] = 'authorized';
-          header("location: profilepage.html");
-      }else{
-          return "Please enter a correct email and password";
-      }
-    }
+
 
     private function validateUser($email, $password){
         connect();
         global $conn;
 
-        $query = "SELECT * FROM user WHERE iduser = ? AND password = ? LIMIT 1";
+        echo 'try to login with '. $email . " " . $password;
+        $query = "SELECT iduser FROM user WHERE email = ? AND password = ? LIMIT 1";
 
         $statment = mysqli_prepare($conn,$query);
         if ( !$statment ) {
@@ -27,9 +25,14 @@ class Membership
         mysqli_stmt_bind_param($statment, 'ss', $email, $password);
         mysqli_stmt_execute($statment);
 
-        if(mysqli_stmt_fetch()){
+        $id = 0;
+        mysqli_stmt_bind_result($statment, $id);
+
+        if(mysqli_stmt_fetch($statment)){
             mysqli_stmt_close($statment);
-            return true;
+            return $id;
+        }else{
+            return false;
         }
         close();
     }
@@ -51,6 +54,22 @@ class Membership
             return false;
         }
         return true;
+    }
+
+    function login($email, $password){
+        echo ' in login of membershop ';
+        $response = $this->validateUser($email, $password);
+
+        if($response){
+            echo 'logged in';
+            $_SESSION['status'] = 'authorized';
+            $_SESSION['userid'] = $response;
+            echo $response;
+            return true;
+        }else{
+            return false;
+            echo 'NOT NOT NOT NOT logged in';
+        }
     }
 }
 
