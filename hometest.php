@@ -21,6 +21,7 @@
 //   of the currently executing script
 
 require 'connect.php';
+//require 'login.php';
 
 $check_login = "";
 $check_register = "";
@@ -31,67 +32,66 @@ $loginPwd = "";
 $loginEmailError = "";
 $loginPwdError = "";
 
-/*if(!empty($_POST["loginEmail"]) || !empty($_POST["loginPwd"])) {
-    logUser();
-}
+if(isset($_POST['signin'])) {
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        if (empty($_POST["loginEmail"])) {
+            $loginEmailError = "Name is required";
+        } else {
+            $loginEmail = htmlspecialchars($_POST["loginEmail"]);
+        }
 
-if(!empty($_POST["name"]) || !empty($_POST["email"]) || !empty($_POST["major"]) ||
-            !empty($_POST["university"]) || !empty($_POST["pwd"])) {
-    newUser();
-} */
+        if (empty($_POST["loginPwd"])) {
+            $loginPwdError = "Name is required";
+        } else {
+            $loginPwd = htmlspecialchars($_POST["loginPwd"]);
+        }
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if (empty($_POST["loginEmail"])) {
-        $loginEmailError = "Name is required";
-    } else {
-        $loginEmail = htmlspecialchars($_POST["loginEmail"]);
-    }
-
-    if (empty($_POST["loginPwd"])) {
-        $loginPwdError = "Name is required";
-    } else {
-        $loginPwd = htmlspecialchars($_POST["loginPwd"]);
+        login("loginEmail", "loginPwd");
     }
 }
-
 
 
 $name = "";         $email = "";        $password = "";  $major = "";       $universityID = "";
 $nameError = "";    $emailError = "";   $pwdError = "";  $majorError = "";  $uniError = "";
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if (empty($_POST["name"])) {
-        $nameError = "Name is required";
-    } else {
-        $name = htmlspecialchars($_POST["name"]);
-    }
+if(isset($_POST['register']))
+{
+    echo "aaaay";
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        echo "haaaaaaaaay";
+        if (empty($_POST["name"])) {
+            $nameError = "Name is required";
+        } else {
+            $name = htmlspecialchars($_POST["name"]);
+        }
 
-    if (empty($_POST["email"])) {
-        $emailError = "Email is required";
-    } else {
-        $email = htmlspecialchars($_POST["email"]);
-    }
+        if (empty($_POST["email"])) {
+            $emailError = "Email is required";
+        } else {
+            $email = htmlspecialchars($_POST["email"]);
+        }
 
-    if (empty($_POST["major"])) {
-        $majorError = "Major is required";
-    } else {
-        $major = htmlspecialchars($_POST["major"]);
-    }
+        if (empty($_POST["major"])) {
+            $majorError = "Major is required";
+        } else {
+            $major = htmlspecialchars($_POST["major"]);
+        }
 
-    if (empty($_POST["pwd"])) {
-        $pwdError = "Password is required is required";
-    } else {
-        $password = htmlspecialchars($_POST["pwd"]);
-    }
+        if (empty($_POST["pwd"])) {
+            $pwdError = "Password is required is required";
+        } else {
+            $password = htmlspecialchars($_POST["pwd"]);
+        }
 
-    if (empty($_POST["university"])) {
-        $uniError = "Password is required is required";
-    } else {
-        $universityID = htmlspecialchars($_POST["university"]);
-    }
+        if (empty($_POST["university"])) {
+            $uniError = "Password is required is required";
+        } else {
+            $universityID = htmlspecialchars($_POST["university"]);
+        }
 
-    if (!$nameError && !$emailError && !$pwdError && !$majorError && !$uniError) {
-        createUser($name, $email, $password, $major, $universityID);
+        if (!$nameError && !$emailError && !$pwdError && !$majorError && !$uniError) {
+            createUser($name, $email, $password, $major, $universityID);
+        }
     }
 }
 
@@ -99,14 +99,15 @@ function createUser($name, $email, $password, $major, $universityID){
     connect();
     global $conn;
 
-    $query = "INSERT INTO user (email, password, userName, total_votes, major, pictureURL) VALUES(?, ?, ?, ?, ?, ?)";
+    $query = "INSERT INTO user (email, password, userName, total_votes, major, universityID) VALUES(?, ?, ?, ?, ?, ?)";
 
     $statment = mysqli_prepare($conn,$query);
     if ( !$statment ) {
         die('mysqli error: '.mysqli_error($conn));
     }
     $votes = 0;
-    mysqli_stmt_bind_param($statment, 'sssisi', $email, $password, $name, $votes, $major, $universityID);
+    $uni = 1;
+    mysqli_stmt_bind_param($statment, 'sssisi', $email, $password, $name, $votes, $major, $uni);
     mysqli_stmt_execute($statment);
 
     if(mysqli_stmt_num_rows($statment) > 0){
@@ -185,14 +186,14 @@ img1 = document.getElementById("img1");
                 <div class="form-group">
                     <label for="loginEmail">Email:</label>
                     <input type="text" class="form-control" name="loginEmail" id="loginEmail" placeholder="Email Address" >
-                    <span class="error"> <?php echo $loginEmailError;?></span>
+                   <!--<span class="error"> <?php echo $loginEmailError;?></span>-->
                 </div>
                 <div class="form-group">
                     <label for="loginPwd">Password:</label>
                     <input type="text" class="form-control" name="loginPwd" id="loginPwd" placeholder="Password">
-                    <span class="error"> <?php echo $loginPwdError;?></span>
+                    <!--<span class="error"> <?php echo $loginPwdError;?></span>-->
                 </div>
-               <button class="btn btn-lg btn-primary btn-block" type="submit">
+               <button class="btn btn-lg btn-primary btn-block" name="signin" type="submit">
                      Sign in
                 </button>
             </form>
@@ -249,9 +250,9 @@ img1 = document.getElementById("img1");
     echo $major;
     echo $password;
 
-    echo "";
-    echo $loginEmail;
-    echo $loginPwd;
+   // echo "";
+   //echo $loginEmail;
+   //echo $loginPwd;
 ?>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
