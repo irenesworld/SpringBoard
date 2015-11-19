@@ -185,17 +185,22 @@ echo 'hi';
         </div>
 
         <div class="modal-body">
-            <div class="form-group">
-                <label for="oldPass">Old password:</label>
-                <input type="text" class="form-control" id="oldPass" placeholder="Old password">
-                <br>
-                <label for="newPass">New password:</label>
-                <input type="text" class="form-control" id="pwd" placeholder="New password">
-            </div>
+
+            <form id="changePassForm" role="form" method="post" action=<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?> >
+                <div class="form-group">
+                    <label for="oldPass">Old password:</label>
+                    <input type="text" class="form-control" name="oldPass" id="oldPass" placeholder="Old password">
+                </div>
+
+                <div class="form-group">
+                    <label for="newPass">New password:</label>
+                    <input type="text" class="form-control" name="newPass" id="newPass" placeholder="New password">
+                </div>
+            </form>
         </div>
 
-        <div class="modal-body">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Change</button>
+        <div class="modal-footer">
+            <button type="submit" class="btn btn-default" data-dismiss="modal" id="changePass">Change</button>
         </div>
     </div>
 </div>
@@ -233,6 +238,13 @@ echo 'hi';
 
         });
 
+    });
+
+    $( "#changePass" ).click(function() {
+        alert('hello');
+        var values = $("#changePassForm").serialize();
+        alert(values);
+        window.location.replace("profile.php/?" + values);
     });
 </script>
 
