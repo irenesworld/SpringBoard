@@ -1,7 +1,7 @@
 <?php
 
 session_start();
-
+//small change
 require 'Membership.php';
 $membership = new Membership();
 

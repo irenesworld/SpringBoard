@@ -65,7 +65,25 @@ if(isset($_POST['register']))
         if (empty($_POST["email"])) {
             $emailError = "Email is required";
         } else {
-            $email = htmlspecialchars($_POST["email"]);
+            connect();
+            global $conn;
+            $query = "SELECT email FROM user LIMIT 1";
+            $statment = mysqli_prepare($conn,$query);
+            if ( !$statment ) {
+                die('membership prepare error: '.mysqli_error($conn));
+            }
+            mysqli_stmt_bind_param($statment, 's', $email, $password);
+            mysqli_stmt_execute($statment);
+            $em = "";
+            mysqli_stmt_bind_result($statment, $em);
+
+            if(mysqli_stmt_fetch($statment)){
+                mysqli_stmt_close($statment);
+                $emailError = "Email already exists";
+            }else {
+                mysqli_stmt_close($statment);
+                $email = htmlspecialchars($_POST["email"]);
+            }
         }
 
         if (empty($_POST["major"])) {
