@@ -241,9 +241,7 @@ echo 'hi';
     });
 
     $( "#changePass" ).click(function() {
-        alert('hello');
         var values = $("#changePassForm").serialize();
-        alert(values);
         window.location.replace("profile.php/?" + values);
     });
 </script>
