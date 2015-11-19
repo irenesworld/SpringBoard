@@ -4,6 +4,7 @@
 require_once 'connect.php';
 session_start();
 echo 'goes into php file';
+ob_start();
 
 $pictureURL = "";
 $pictureError = "";
@@ -135,8 +136,29 @@ if(isset($_GET['oldPass'])) {
         $passwordError = "Incorrect password";
     }
     close();
-    header("Location: ../profiletest.php");
-    exit();
+
+    header("Location: profiletest.php");
+    ob_end_flush();
+    redirect('../profiletest.php');
+
+}
+
+function redirect($url)
+{
+    if (!headers_sent())
+    {
+        header('Location: '.$url);
+        exit;
+    }
+    else
+    {
+        echo '<script type="text/javascript">';
+        echo 'window.location.href="'.$url.'";';
+        echo '</script>';
+        echo '<noscript>';
+        echo '<meta http-equiv="refresh" content="0;url='.$url.'" />';
+        echo '</noscript>'; exit;
+    }
 }
 
 ?>
