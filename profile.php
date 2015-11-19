@@ -14,9 +14,7 @@ if(isset($_GET['loadpic'])) {
     global $conn;
 
     $userEmail = $_SESSION['userEmail'];
-    //echo 'user Email:   ';
-    //echo $userEmail;
-    //echo '   ';
+    echo $userEmail;
 
     $query = "SELECT pictureURL from user where email = ?";
 
@@ -91,6 +89,20 @@ if(isset($_GET['changepic'])) {
     }else {
         $pictureError = "Could not change picture";
     }
+}
+
+$oldPwd = "";
+#newPass = "";
+if(isset($_GET['oldPass'])) {
+    echo 'goes into here';
+    $oldPass = strip_tags($_GET['oldPass']);
+    $newPass = strip_tags($_GET['newPass']);
+   // $oldPwd = htmlspecialchars($_GET['oldPass']);
+    echo 'old pass: ';
+    echo $oldPass;
+    echo '    new pass: ';
+    echo $newPass;
+
 }
 
 ?>

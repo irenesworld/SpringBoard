@@ -1,4 +1,5 @@
 <?php
+// hi kramer
 
 // $_POST: create an array (ex: array( key -> value, key2 -> value2, ...)
 // holds key/value pairs, where keys are the names of the form controls
@@ -41,9 +42,7 @@ if(isset($_POST['signin'])) {
             $loginPwd = htmlspecialchars($_POST["loginPwd"]);
         }
 
-        if(login($loginEmail, $loginPwd)){
-            echo("<script>location.href = '/springboard/profilepage.html';</script>");
-        }
+        login($loginEmail, $loginPwd);
     }
 }
 
@@ -53,9 +52,7 @@ $nameError = "";    $emailError = "";   $pwdError = "";  $majorError = "";  $uni
 
 if(isset($_POST['register']))
 {
-    echo "aaaay ";
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        echo "haaaaaaaaay";
         if (empty($_POST["name"])) {
             $nameError = "Name is required";
         } else {
@@ -65,25 +62,7 @@ if(isset($_POST['register']))
         if (empty($_POST["email"])) {
             $emailError = "Email is required";
         } else {
-            connect();
-            global $conn;
-            $query = "SELECT email FROM user LIMIT 1";
-            $statment = mysqli_prepare($conn,$query);
-            if ( !$statment ) {
-                die('membership prepare error: '.mysqli_error($conn));
-            }
-            mysqli_stmt_bind_param($statment, 's', $email, $password);
-            mysqli_stmt_execute($statment);
-            $em = "";
-            mysqli_stmt_bind_result($statment, $em);
-
-            if(mysqli_stmt_fetch($statment)){
-                mysqli_stmt_close($statment);
-                $emailError = "Email already exists";
-            }else {
-                mysqli_stmt_close($statment);
-                $email = htmlspecialchars($_POST["email"]);
-            }
+            $email = htmlspecialchars($_POST["email"]);
         }
 
         if (empty($_POST["major"])) {
@@ -165,7 +144,7 @@ function createUser($name, $email, $password, $major, $universityID){
             <ul class="nav navbar-nav" >
                 <li class="active"><a href="hometest.php">Home</a></li>
                 <li><a href="aboutpage.html">About</a><li>
-                <li><a href="profilepage.html">Profile</a></li>
+                <li><a href="profiletest.php">Profile</a></li>
                 <li><a href="myresumepage.html">My Resumes</a></li>
                 <li><a href="#">Review Resumes</a><li>
                 <li><a href="#">Resources</a></li>
@@ -202,7 +181,7 @@ img1 = document.getElementById("img1");
                 </div>
                 <div class="form-group">
                     <label for="loginPwd">Password:</label>
-                    <input type="text" class="form-control" name="loginPwd" id="loginPwd" placeholder="Password">
+                    <input type="password" class="form-control" name="loginPwd" id="loginPwd" placeholder="Password">
                     <!--<span class="error"> <?php echo $loginPwdError;?></span>-->
                 </div>
                <button class="btn btn-lg btn-primary btn-block" name="signin" type="submit">
