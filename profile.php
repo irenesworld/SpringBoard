@@ -64,7 +64,7 @@ function changePicture($pictureURL){
     echo '    user email: ';
     echo $userEmail;
 
-   mysqli_stmt_bind_param($statment, 'ss', $pictureURL, $userEmail);
+    mysqli_stmt_bind_param($statment, 'ss', $pictureURL, $userEmail);
     mysqli_stmt_execute($statment);
 
     if(mysqli_stmt_fetch($statment)){
@@ -74,14 +74,14 @@ function changePicture($pictureURL){
         return true;
     }else{
         mysqli_stmt_close($statment);
-       header("Location: ../profiletest.php");
+        header("Location: ../profiletest.php");
         close();
         return false;
     }
 }
 
 if(isset($_GET['changepic'])) {
-   $pictureURL = htmlspecialchars($_GET['changepic']);
+    $pictureURL = htmlspecialchars($_GET['changepic']);
 
     if(changePicture($pictureURL)){
         //it changed it
@@ -92,17 +92,51 @@ if(isset($_GET['changepic'])) {
 }
 
 $oldPwd = "";
-#newPass = "";
+$newPass = "";
+$passwordError = "";
 if(isset($_GET['oldPass'])) {
-    echo 'goes into here';
+    connect();
+    global $conn;
     $oldPass = strip_tags($_GET['oldPass']);
     $newPass = strip_tags($_GET['newPass']);
-   // $oldPwd = htmlspecialchars($_GET['oldPass']);
-    echo 'old pass: ';
-    echo $oldPass;
-    echo '    new pass: ';
-    echo $newPass;
 
+    $query = "SELECT * from user where email = ? and password = ?";
+
+    $statment = mysqli_prepare($conn, $query);
+    if ( !$statment ) {
+        die('mysqli error: '.mysqli_error($conn));
+    }
+
+    $result = "";
+    mysqli_stmt_bind_param($statment, 'ss', $_SESSION['userEmail'], $oldPass);
+    mysqli_stmt_execute($statment);
+    mysqli_stmt_bind_result($statment, $result);
+
+    if(mysqli_stmt_fetch($statment)){
+        mysqli_stmt_close($statment);
+
+        $query2 = "UPDATE user SET password = ? WHERE email = ? and password = ?";
+
+        $statment2 = mysqli_prepare($conn, $query2);
+        if ( !$statment2 ) {
+            die('mysqli error: '.mysqli_error($conn));
+        }
+
+        mysqli_stmt_bind_param($statment2, 'sss', $newPass, $_SESSION['userEmail'], $oldPass);
+        mysqli_stmt_execute($statment2);
+
+        if(mysqli_stmt_fetch($statment2)){
+            mysqli_stmt_close($statment2);
+            //changed password
+        }else{
+            $passwordError = "Could not change password";
+        }
+    }else{
+        mysqli_stmt_close($statment);
+        $passwordError = "Incorrect password";
+    }
+    close();
+    header("Location: ../profiletest.php");
 }
 
 ?>
