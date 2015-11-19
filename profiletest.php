@@ -189,12 +189,12 @@ echo 'hi';
             <form id="changePassForm" role="form" method="post" action=<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?> >
                 <div class="form-group">
                     <label for="oldPass">Old password:</label>
-                    <input type="text" class="form-control" name="oldPass" id="oldPass" placeholder="Old password">
+                    <input type="password" class="form-control" name="oldPass" id="oldPass" placeholder="Old password">
                 </div>
 
                 <div class="form-group">
                     <label for="newPass">New password:</label>
-                    <input type="text" class="form-control" name="newPass" id="newPass" placeholder="New password">
+                    <input type="password" class="form-control" name="newPass" id="newPass" placeholder="New password">
                 </div>
             </form>
         </div>
