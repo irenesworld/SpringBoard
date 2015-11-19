@@ -107,10 +107,9 @@ if(isset($_GET['oldPass'])) {
         die('mysqli error: '.mysqli_error($conn));
     }
 
-    $result = "";
     mysqli_stmt_bind_param($statment, 'ss', $_SESSION['userEmail'], $oldPass);
     mysqli_stmt_execute($statment);
-    mysqli_stmt_bind_result($statment, $result);
+
 
     if(mysqli_stmt_fetch($statment)){
         mysqli_stmt_close($statment);
