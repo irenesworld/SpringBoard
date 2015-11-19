@@ -64,6 +64,7 @@ class Membership
             echo 'logged in';
             $_SESSION['status'] = 'authorized';
             $_SESSION['userid'] = $response;
+            $_SESSION["userEmail"] = $email;
             echo $response;
             return true;
         }else{

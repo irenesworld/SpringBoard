@@ -1,19 +1,15 @@
 <?php
 
 session_start();
-
+//small change
 require 'Membership.php';
 $membership = new Membership();
 
 function login($email, $password){
-    echo 'LOGGING IN  ';
-    echo "\r\n";
+    echo ' in login of login php';
     global $membership;
     $response = $membership->login($email, $password);
-    $_SESSION["userEmail"] = $email;
-    echo '  email for session: ';
-    echo $email;
-    echo "\r\n";
+    return $response; // true or false
 }
 
 function logout(){

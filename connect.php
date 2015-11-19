@@ -1,6 +1,5 @@
 <?php
 
-
 $DB_USERNAME =  'root';
 $DB_PASSWORD = 'springboard123';
 $DB_HOSTNAME = 'springboard.c4psj6yhsvss.us-east-1.rds.amazonaws.com';
@@ -16,6 +15,9 @@ function connect(){
     if(!$conn){
         die('Error: Could not connect to database.');
     }
+
+    echo '  CONNECTED TO DATABASE  ';
+    echo "\r\n";
 }
 
 function close(){

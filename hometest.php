@@ -1,10 +1,3 @@
-<!--
- * Created by PhpStorm.
- * User: Irene
- * Date: 11/3/2015
- * Time: 9:25 AM
- */ -->
-
 <?php
 
 // $_POST: create an array (ex: array( key -> value, key2 -> value2, ...)
@@ -20,6 +13,8 @@
 // - $_SERVER["PHP_SELF"] is a super global variable that returns the filename
 //   of the currently executing script
 
+//CHECK FOR EMAILS
+
 require_once 'connect.php';
 require 'login.php';
 
@@ -34,7 +29,7 @@ $loginPwdError = "";
 
 if(isset($_POST['signin'])) {
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        if (empty($_POST["loginEmail"])) {
+        if (empty($_POST["loginEmail"]) || !filter_var($_POST['loginEmail'], FILTER_VALIDATE_EMAIL)) {
             $loginEmailError = "Name is required";
         } else {
             $loginEmail = htmlspecialchars($_POST["loginEmail"]);
@@ -46,7 +41,9 @@ if(isset($_POST['signin'])) {
             $loginPwd = htmlspecialchars($_POST["loginPwd"]);
         }
 
-        login($loginEmail, $loginPwd);
+        if(login($loginEmail, $loginPwd)){
+            echo("<script>location.href = '/springboard/profilepage.html';</script>");
+        }
     }
 }
 
@@ -68,7 +65,25 @@ if(isset($_POST['register']))
         if (empty($_POST["email"])) {
             $emailError = "Email is required";
         } else {
-            $email = htmlspecialchars($_POST["email"]);
+            connect();
+            global $conn;
+            $query = "SELECT email FROM user LIMIT 1";
+            $statment = mysqli_prepare($conn,$query);
+            if ( !$statment ) {
+                die('membership prepare error: '.mysqli_error($conn));
+            }
+            mysqli_stmt_bind_param($statment, 's', $email, $password);
+            mysqli_stmt_execute($statment);
+            $em = "";
+            mysqli_stmt_bind_result($statment, $em);
+
+            if(mysqli_stmt_fetch($statment)){
+                mysqli_stmt_close($statment);
+                $emailError = "Email already exists";
+            }else {
+                mysqli_stmt_close($statment);
+                $email = htmlspecialchars($_POST["email"]);
+            }
         }
 
         if (empty($_POST["major"])) {
@@ -116,7 +131,6 @@ function createUser($name, $email, $password, $major, $universityID){
     close();
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -149,7 +163,7 @@ function createUser($name, $email, $password, $major, $universityID){
         </div>
         <div>
             <ul class="nav navbar-nav" >
-                <li class="active"><a href="homepage.html">Home</a></li>
+                <li class="active"><a href="hometest.php">Home</a></li>
                 <li><a href="aboutpage.html">About</a><li>
                 <li><a href="profilepage.html">Profile</a></li>
                 <li><a href="myresumepage.html">My Resumes</a></li>
