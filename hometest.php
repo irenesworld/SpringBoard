@@ -1,4 +1,5 @@
 <?php
+// hi kramer
 
 // $_POST: create an array (ex: array( key -> value, key2 -> value2, ...)
 // holds key/value pairs, where keys are the names of the form controls
