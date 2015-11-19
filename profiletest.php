@@ -4,6 +4,9 @@ require_once 'connect.php';
 session_start();
 
 $pictureURL = "";
+$name = "";
+$major = "";
+
 echo 'hi';
 //if(isset($_POST['loadpic'])) {
     echo 'goes inside isset(profpic)    ';
@@ -15,7 +18,7 @@ echo 'hi';
     //echo $userEmail;
     //echo '   ';
 
-    $query = "SELECT pictureURL from user where email = ?";
+    $query = "SELECT pictureURL, userName, major from user where email = ?";
 
     $statment = mysqli_prepare($conn, $query);
     if ( !$statment ) {
@@ -27,11 +30,12 @@ echo 'hi';
 
     mysqli_stmt_bind_param($statment, 's', $userEmail);
     mysqli_stmt_execute($statment);
-    mysqli_stmt_bind_result($statment, $pictureURL);
+    mysqli_stmt_bind_result($statment, $pictureURL, $name, $major);
 
     if(mysqli_stmt_fetch($statment)){
        // echo 'PICTURE URLLLL';
         echo $pictureURL;
+        echo $name;
         mysqli_stmt_close($statment);
         close();
         //return true;
@@ -128,7 +132,7 @@ echo 'hi';
                     </div></a>
                 <p> </p>
                 <p> </p>
-                <p><b>Irene Lau</b></p>
+                <p><b><?php echo $name ?></b></p>
                 <p><b>Votes: </b>11</p>
 
             </div>
@@ -139,17 +143,17 @@ echo 'hi';
             <table class="profile" width=60%>
                 <tr>
                     <td> <p><b>Name: </b></p> </td>
-                    <td> <p>Irene Lau </p> </td>
+                    <td> <p><?php echo $name ?> </p> </td>
                 </tr>
 
                 <tr>
                     <td> <p><b>School: </b></p></td>
-                    <td> <p>Lehigh University</p> </td>
+                    <td> <p>University?</p> </td>
                 </tr>
 
                 <tr>
                     <td><p><b>Major: </b> </p> </td>
-                    <td><p>Computer Science</p> </td>
+                    <td><p><?php echo $major ?></p> </td>
                 </tr>
                 <tr>
                     <td><p> </p></td>
@@ -161,15 +165,37 @@ echo 'hi';
 
                 <tr>
                     <td><p><b>E-mail: </b></p></td>
-                    <td> <p>irl216@lehigh.edu</p> </td>
+                    <td> <p><?php echo $userEmail ?></p> </td>
                 </tr>
 
                 <tr>
                     <td><p><b>Password: </b></p></td>
                     <td><p>***********</p></td>
-                    <td> <a href="#">edit</a> </td>
+                    <td> <button type="button" class="btn btn-link" data-toggle="modal" data-target="#changePwd">edit</button> </td>
                 </tr>
             </table>
+        </div>
+    </div>
+</div>
+
+<div id="changePwd" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-sm" style="background-color: white">
+        <div class="modal-header">
+            <h2 class="modal-title">Password Change</h2>
+        </div>
+
+        <div class="modal-body">
+            <div class="form-group">
+                <label for="oldPass">Old password:</label>
+                <input type="text" class="form-control" id="oldPass" placeholder="Old password">
+                <br>
+                <label for="newPass">New password:</label>
+                <input type="text" class="form-control" id="pwd" placeholder="New password">
+            </div>
+        </div>
+
+        <div class="modal-body">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Change</button>
         </div>
     </div>
 </div>
