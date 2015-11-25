@@ -239,8 +239,10 @@ img1 = document.getElementById("img1");
                 </div>
                 <div class="form-group">
                     <label for="university">School:</label>
-                    <input type="text" class="form-control" name="university" id="university" placeholder="University">
-                    <span class="error"> <?php echo $uniError;?></span>
+                    <select class="form-control" name="university" id="university" placeholder="University">
+                    <option>Lehigh University</option>
+                        </select>
+                        <span class="error"> <?php echo $uniError;?></span>
                 </div>
                 <div class="form-group">
                     <label for="major">Major:</label>

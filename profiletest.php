@@ -150,7 +150,7 @@ echo 'hi';
 
                 <tr>
                     <td> <p><b>School: </b></p></td>
-                    <td> <p>University?</p> </td>
+                    <td> <p><?php echo $university ?> </p> </td>
                 </tr>
 
                 <tr>
