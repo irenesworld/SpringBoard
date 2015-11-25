@@ -109,7 +109,7 @@ echo 'hi';
                 <li><a href="hometest.php">Home</a></li>
                 <li><a href="aboutpage.html">About</a><li>
                 <li class="active"><a href="profiletest.php">Profile</a></li>
-                <li><a href="myresumepage.html">My Resumes</a></li>
+                <li><a href="myresume.php">My Resumes</a></li>
                 <li><a href="#">Review Resumes</a><li>
                 <li><a href="#">Resources</a></li>
             </ul>
