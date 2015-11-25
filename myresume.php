@@ -10,7 +10,7 @@ viewByTimeStamp();
 function viewByTimeStamp(){
     connect();
     global $conn;
-    $query = "SELECT ts, resumeURL from resume where user_id = ? order by ts DESC";
+    $query = "SELECT ts, name, resumeURL from resume where user_id = ? order by ts DESC";
     $statment = mysqli_prepare($conn, $query);
     if ( !$statment ) {
         die('mysqli error: '.mysqli_error($conn));
@@ -23,7 +23,7 @@ function viewByTimeStamp(){
     $timeStamp = "";
     $name = "";
     $resumeURL = "";
-    mysqli_stmt_bind_result($statment, $timeStamp, $resumeURL);
+    mysqli_stmt_bind_result($statment, $timeStamp, $name, $resumeURL);
 
     while($row = mysqli_stmt_fetch($statment)){
         $resumeArray[] = array($timeStamp, $name, $resumeURL);
