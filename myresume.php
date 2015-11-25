@@ -21,11 +21,12 @@ function viewByTimeStamp(){
 
 
     $timeStamp = "";
+    $name = "";
     $resumeURL = "";
     mysqli_stmt_bind_result($statment, $timeStamp, $resumeURL);
 
     while($row = mysqli_stmt_fetch($statment)){
-        $resumeArray[] = array($timeStamp, $resumeURL);
+        $resumeArray[] = array($timeStamp, $name, $resumeURL);
     }
 
     foreach($resumeArray as &$row2){
