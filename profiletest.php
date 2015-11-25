@@ -6,6 +6,7 @@ session_start();
 $pictureURL = "";
 $name = "";
 $major = "";
+$university = "";
 
 echo 'hi';
 //if(isset($_POST['loadpic'])) {
@@ -18,7 +19,7 @@ echo 'hi';
     //echo $userEmail;
     //echo '   ';
 
-    $query = "SELECT pictureURL, userName, major from user where email = ?";
+    $query = "SELECT pictureURL, userName, major, university.name from user inner JOIN university on user.universityID=university.iduniversity where email = ? ";
 
     $statment = mysqli_prepare($conn, $query);
     if ( !$statment ) {
@@ -30,12 +31,13 @@ echo 'hi';
 
     mysqli_stmt_bind_param($statment, 's', $userEmail);
     mysqli_stmt_execute($statment);
-    mysqli_stmt_bind_result($statment, $pictureURL, $name, $major);
+    mysqli_stmt_bind_result($statment, $pictureURL, $name, $major, $university);
+
 
     if(mysqli_stmt_fetch($statment)){
        // echo 'PICTURE URLLLL';
-        echo $pictureURL;
-        echo $name;
+
+        echo 'pictureurl is '.$pictureURL.' name is '.$name.' major is '.$major.' uni is '.$university;
         mysqli_stmt_close($statment);
         close();
         //return true;

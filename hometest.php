@@ -28,6 +28,24 @@ $loginPwd = "";
 $loginEmailError = "";
 $loginPwdError = "";
 
+function redirect($url)
+{
+    if (!headers_sent())
+    {
+        header('Location: '.$url);
+        exit;
+    }
+    else
+    {
+        echo '<script type="text/javascript">';
+        echo 'window.location.href="'.$url.'";';
+        echo '</script>';
+        echo '<noscript>';
+        echo '<meta http-equiv="refresh" content="0;url='.$url.'" />';
+        echo '</noscript>'; exit;
+    }
+}
+
 if(isset($_POST['signin'])) {
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (empty($_POST["loginEmail"]) || !filter_var($_POST['loginEmail'], FILTER_VALIDATE_EMAIL)) {
@@ -37,12 +55,19 @@ if(isset($_POST['signin'])) {
         }
 
         if (empty($_POST["loginPwd"])) {
-            $loginPwdError = "Name is required";
+            $loginPwdError = "Password is required";
         } else {
             $loginPwd = htmlspecialchars($_POST["loginPwd"]);
         }
 
-        login($loginEmail, $loginPwd);
+        $loggedIn = login($loginEmail, $loginPwd);
+        if((!$loginEmailError && !$loginPwdError) && !$loggedIn){
+            $loginPwdError = "Incorrect email or password";
+        }
+
+        if($loggedIn){
+            redirect('../springboard/profiletest.php');
+        }
     }
 }
 
@@ -85,6 +110,7 @@ if(isset($_POST['register']))
 
         if (!$nameError && !$emailError && !$pwdError && !$majorError && !$uniError) {
             createUser($name, $email, $password, $major, $universityID);
+            redirect('../springboard/profiletest.php');
         }
     }
 }
@@ -109,6 +135,7 @@ function createUser($name, $email, $password, $major, $universityID){
     mysqli_stmt_close($statment);
     close();
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -177,12 +204,12 @@ img1 = document.getElementById("img1");
                 <div class="form-group">
                     <label for="loginEmail">Email:</label>
                     <input type="text" class="form-control" name="loginEmail" id="loginEmail" placeholder="Email Address" >
-                   <!--<span class="error"> <?php echo $loginEmailError;?></span>-->
+                   <span class="error"> <?php echo $loginEmailError;?></span>
                 </div>
                 <div class="form-group">
                     <label for="loginPwd">Password:</label>
                     <input type="password" class="form-control" name="loginPwd" id="loginPwd" placeholder="Password">
-                    <!--<span class="error"> <?php echo $loginPwdError;?></span>-->
+                    <span class="error"> <?php echo $loginPwdError;?></span>
                 </div>
                <button class="btn btn-lg btn-primary btn-block" name="signin" type="submit">
                      Sign in

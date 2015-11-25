@@ -108,7 +108,6 @@ if(isset($_GET['oldPass'])) {
         die('mysqli error: '.mysqli_error($conn));
     }
 
-    $result = "";
     mysqli_stmt_bind_param($statment, 'ss', $_SESSION['userEmail'], $oldPass);
     mysqli_stmt_execute($statment);
 
@@ -124,29 +123,24 @@ if(isset($_GET['oldPass'])) {
 
         mysqli_stmt_bind_param($statment2, 'sss', $newPass, $_SESSION['userEmail'], $oldPass);
         mysqli_stmt_execute($statment2);
+
         $result = "";
         mysqli_stmt_bind_result($statment2, $result);
 
         if(mysqli_stmt_fetch($statment2)){
             mysqli_stmt_close($statment2);
-            close();
-            redirect('../profiletest.php');
             //changed password
         }else{
             $passwordError = "Could not change password";
-            close();
-            redirect('../profiletest.php/?passError='.$passwordError);
         }
     }else{
         mysqli_stmt_close($statment);
         $passwordError = "Incorrect password";
-        close();
-        redirect('../profiletest.php/?passError='.$passwordError);
     }
     close();
 
-    //header("Location: profiletest.php");
-    //ob_end_flush();
+    ob_end_flush();
+    redirect('../profiletest.php');
 
 }
 
@@ -169,138 +163,4 @@ function redirect($url)
 }
 
 ?>
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>Bootstrap Example</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-    <style>
-
-        img.img-circle {
-            border: 2px;
-            border-color: white;
-        }
-        div.border {
-            text-align: center;
-            border-radius: 5px;
-            background-color: #99CCFF;
-            margin-top: 10px;
-            padding: 15px;
-            margin-right: 5px;
-        }
-        div.centered {
-            text-align: center;
-        }
-
-    </style>
-</head>
-<body>
-
-<div class="header">
-    <table align="center" width=100%>
-        <tr>
-            <td>
-                <h1>&nbsp;SpringBoard</h1>
-            </td>
-            <td>
-                <br>
-                <p align="right">Log in  |  Sign up &nbsp;</p>
-            </td>
-        </tr>
-    </table>
-</div>
-
-<!-- AJAX is Asynchronous JavaScript and XML
-// loading data in the background and display it
-// on the web page without reloading the whole page -->
-
-<nav class="navbar navbar-inverse">
-    <div class="container-fluid">
-        <div class="navbar-header">
-        </div>
-        <div>
-            <ul class="nav navbar-nav" >
-                <li><a href="#">Home</a></li>
-                <li><a href="#">About</a><li>
-                <li class="active"><a href="#">Profile</a></li>
-                <li><a href="#">My Resumes</a></li>
-                <li><a href="#">Review Resumes</a><li>
-                <li><a href="#">Resources</a></li>
-            </ul>
-        </div>
-    </div>
-</nav>
-
-
-<div class="container">
-    <h1>Profile</h1>
-
-    <div class="row">
-        <div class="col-md-3">
-            <div class="border">
-                <p> </p>
-                <div class="centered">
-                    <img src="<?php echo $pictureURL ?>" id="profpic" alt="Irene Lau" width="100" >
-                </div>
-                <br>
-                <a href="#"> <div id="pickbutton">
-                        Edit photo
-                    </div></a>
-                <p> </p>
-                <p> </p>
-                <p><b><?php echo $name ?></b></p>
-                <p><b>Votes: </b>11</p>
-
-            </div>
-        </div>
-        <div class="col-md-1"></div>
-        <div class="col-md-8">
-            <br><br>
-            <table class="profile" width=60%>
-                <tr>
-                    <td> <p><b>Name: </b></p> </td>
-                    <td> <p><?php echo $name ?> </p> </td>
-                </tr>
-
-                <tr>
-                    <td> <p><b>School: </b></p></td>
-                    <td> <p>University?</p> </td>
-                </tr>
-
-                <tr>
-                    <td><p><b>Major: </b> </p> </td>
-                    <td><p><?php echo $major ?></p> </td>
-                </tr>
-                <tr>
-                    <td><p> </p></td>
-                </tr>
-
-                <tr>
-                    <td><p> </p></td>
-                </tr>
-
-                <tr>
-                    <td><p><b>E-mail: </b></p></td>
-                    <td> <p><?php echo $userEmail ?></p> </td>
-                </tr>
-
-                <tr>
-                    <td><p><b>Password: </b></p></td>
-                    <td><p>***********</p></td>
-                    <td> <button type="button" class="btn btn-link" data-toggle="modal" data-target="#changePwd">edit</button> </td>
-                </tr>
-            </table>
-        </div>
-    </div>
-</div>
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-<script src="http://api.filepicker.io/v2/filepicker.js"></script>
-
-</body>
-</html>
 
