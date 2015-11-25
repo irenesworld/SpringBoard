@@ -1,6 +1,41 @@
 <?php
 // hi kramer
 
+require_once 'connect.php';
+require_once 'login.php';
+
+$resumeArray = array();
+viewByTimeStamp();
+
+function viewByTimeStamp(){
+    connect();
+    global $conn;
+    $query = "SELECT ts, resumeURL from resume where user_id = ? ";
+    $statment = mysqli_prepare($conn, $query);
+    if ( !$statment ) {
+        die('mysqli error: '.mysqli_error($conn));
+    }
+
+    mysqli_stmt_bind_param($statment, 's', $_SESSION['userid']);
+    mysqli_stmt_execute($statment);
+
+
+    $timeStamp = "";
+    $resumeURL = "";
+    mysqli_stmt_bind_result($statment, $timeStamp, $resumeURL);
+
+    while($row = mysqli_stmt_fetch($statment)){
+        $resumeArray[] = array($timeStamp, $resumeURL);
+    }
+
+    foreach($resumeArray as &$row2){
+        foreach($row2 as &$str){
+            echo ' '.$str;
+        }
+    }
+    close();
+}
+
 ?>
 
 <!DOCTYPE html>
