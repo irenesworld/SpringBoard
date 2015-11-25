@@ -16,12 +16,18 @@
         mysqli_stmt_bind_param($statment, 'sssisi', $email, $password, $name, $votes, $major, $universityID);
         mysqli_stmt_execute($statment);
 
+        $loggedIn = "";
+
         if(mysqli_stmt_num_rows($statment) > 0){
-            login($email, $password);
+            $loggedIn = login($email, $password);
         }
 
         mysqli_stmt_close($statment);
         close();
+
+        if($loggedIn){
+            header("Location: ../profiletest.php");
+        }
     }
 
     if(isset($_POST['createUser'])){

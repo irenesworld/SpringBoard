@@ -108,7 +108,6 @@ if(isset($_GET['oldPass'])) {
         die('mysqli error: '.mysqli_error($conn));
     }
 
-    $result = "";
     mysqli_stmt_bind_param($statment, 'ss', $_SESSION['userEmail'], $oldPass);
     mysqli_stmt_execute($statment);
 
@@ -125,6 +124,9 @@ if(isset($_GET['oldPass'])) {
         mysqli_stmt_bind_param($statment2, 'sss', $newPass, $_SESSION['userEmail'], $oldPass);
         mysqli_stmt_execute($statment2);
 
+        $result = "";
+        mysqli_stmt_bind_result($statment2, $result);
+
         if(mysqli_stmt_fetch($statment2)){
             mysqli_stmt_close($statment2);
             //changed password
@@ -137,7 +139,6 @@ if(isset($_GET['oldPass'])) {
     }
     close();
 
-    header("Location: profiletest.php");
     ob_end_flush();
     redirect('../profiletest.php');
 
