@@ -10,7 +10,7 @@ viewByTimeStamp();
 function viewByTimeStamp(){
     connect();
     global $conn;
-    $query = "SELECT ts, resumeURL from resume where user_id = ? ";
+    $query = "SELECT ts, resumeURL from resume where user_id = ? order by ts DESC";
     $statment = mysqli_prepare($conn, $query);
     if ( !$statment ) {
         die('mysqli error: '.mysqli_error($conn));
@@ -33,6 +33,25 @@ function viewByTimeStamp(){
             echo ' '.$str;
         }
     }
+
+    mysqli_stmt_close($statment);
+    close();
+}
+
+function addResume($name, $url){
+    connect();
+    global $conn;
+
+    $query = "insert into resume (user_id, name, resumeURL) values(?, ?, ?)";
+    $statment = mysqli_prepare($conn, $query);
+    if ( !$statment ) {
+        die('mysqli error: '.mysqli_error($conn));
+    }
+
+    mysqli_stmt_bind_param($statment, 'iss', $_SESSION['userid'], $name, $url);
+    mysqli_stmt_execute($statment);
+    mysqli_stmt_close($statment);
+
     close();
 }
 
