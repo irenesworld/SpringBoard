@@ -18,7 +18,7 @@ echo 'hi';
     //echo $userEmail;
     //echo '   ';
 
-    $query = "SELECT pictureURL, userName, major from user where email = ?";
+    $query = "SELECT pictureURL, userName, major from user where email = ? ";
 
     $statment = mysqli_prepare($conn, $query);
     if ( !$statment ) {
