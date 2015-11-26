@@ -84,12 +84,14 @@ function changePicture($pictureURL){
 
     if(mysqli_stmt_fetch($statment)){
         mysqli_stmt_close($statment);
-        header("Location: ../profiletest.php");
+        //header("Location: ../profiletest.php");
+        redirect("../profiletest.php");
         close();
         return true;
     }else{
         mysqli_stmt_close($statment);
-        header("Location: ../profiletest.php");
+        //header("Location: ../profiletest.php");
+        redirect("../profiletest.php");
         close();
         return false;
     }
@@ -103,6 +105,24 @@ if(isset($_GET['changepic'])) {
         echo $pictureURL;
     }else {
         $pictureError = "Could not change picture";
+    }
+}
+
+function redirect($url)
+{
+    if (!headers_sent())
+    {
+        header('Location: '.$url);
+        exit;
+    }
+    else
+    {
+        echo '<script type="text/javascript">';
+        echo 'window.location.href="'.$url.'";';
+        echo '</script>';
+        echo '<noscript>';
+        echo '<meta http-equiv="refresh" content="0;url='.$url.'" />';
+        echo '</noscript>'; exit;
     }
 }
 
