@@ -8,48 +8,83 @@ $name = "";
 $major = "";
 $university = "";
 
-echo 'hi';
-//if(isset($_POST['loadpic'])) {
-    echo 'goes inside isset(profpic)    ';
+
+echo 'goes inside isset(profpic)    ';
+connect();
+global $conn;
+
+$userEmail = $_SESSION['userEmail'];
+
+$query = "SELECT pictureURL, userName, major, university.name from user inner JOIN university on user.universityID=university.iduniversity where email = ? ";
+
+$statment = mysqli_prepare($conn, $query);
+if ( !$statment ) {
+    die('mysqli error: '.mysqli_error($conn));
+}
+
+mysqli_stmt_bind_param($statment, 's', $userEmail);
+mysqli_stmt_execute($statment);
+mysqli_stmt_bind_result($statment, $pictureURL, $name, $major, $university);
+
+
+if(mysqli_stmt_fetch($statment)){
+    echo 'pictureurl is '.$pictureURL.' name is '.$name.' major is '.$major.' uni is '.$university;
+    mysqli_stmt_close($statment);
+    close();
+}else{
+    mysqli_stmt_close($statment);
+    close();
+}
+
+$pwdError = "";
+if(isset($_POST['changePass'])) {
+
+    $oldPass = htmlspecialchars($_POST['oldPass']);
+    $newPass = htmlspecialchars($_POST['newPass']);
     connect();
     global $conn;
-
-    $userEmail = $_SESSION['userEmail'];
-    //echo 'user Email:   ';
-    //echo $userEmail;
-    //echo '   ';
-
-    $query = "SELECT pictureURL, userName, major, university.name from user inner JOIN university on user.universityID=university.iduniversity where email = ? ";
+    $query = "SELECT * from user where email = ? and password = ?";
 
     $statment = mysqli_prepare($conn, $query);
     if ( !$statment ) {
         die('mysqli error: '.mysqli_error($conn));
     }
 
-    //echo '    user email: ';
-    //echo $userEmail;
-
-    mysqli_stmt_bind_param($statment, 's', $userEmail);
+    $result = "";
+    mysqli_stmt_bind_param($statment, 'ss', $_SESSION['userEmail'], $oldPass);
     mysqli_stmt_execute($statment);
-    mysqli_stmt_bind_result($statment, $pictureURL, $name, $major, $university);
-
 
     if(mysqli_stmt_fetch($statment)){
-       // echo 'PICTURE URLLLL';
+        mysqli_stmt_close($statment);
 
-        echo 'pictureurl is '.$pictureURL.' name is '.$name.' major is '.$major.' uni is '.$university;
-        mysqli_stmt_close($statment);
-        close();
-        //return true;
+        $query2 = "UPDATE user SET password = ? WHERE email = ? and password = ?";
+
+        $statment2 = mysqli_prepare($conn, $query2);
+        if ( !$statment2 ) {
+            die('mysqli error: '.mysqli_error($conn));
+        }
+
+        mysqli_stmt_bind_param($statment2, 'sss', $newPass, $_SESSION['userEmail'], $oldPass);
+        mysqli_stmt_execute($statment2);
+        //$result = "";
+        //mysqli_stmt_bind_result($statment2, $result);
+
+       // if(mysqli_stmt_fetch($statment2)){
+            mysqli_stmt_close($statment2);
+            close();
+            //changed password
+       // }else{
+        //    $pwdError = "Could not change password";
+        //    close();
+       // }
     }else{
-      //  $load = $pictureURL;
-      //  echo 'PICTURE URL ';
-      //  echo $pictureURL;
         mysqli_stmt_close($statment);
+        $pwdError = "Incorrect password";
         close();
-        //return false;
     }
-//}
+    close();
+
+}
 ?>
 
 
@@ -175,6 +210,10 @@ echo 'hi';
                     <td><p>***********</p></td>
                     <td> <button type="button" class="btn btn-link" data-toggle="modal" data-target="#changePwd">edit</button> </td>
                 </tr>
+
+                <tr>
+                    <?php echo "<p class='text-danger'>$pwdError</p>";?>
+                </tr>
             </table>
         </div>
     </div>
@@ -188,7 +227,7 @@ echo 'hi';
 
         <div class="modal-body">
 
-            <form id="changePassForm" role="form" method="post" action=<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?> >
+            <form role="form" method="post" action=<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?> >
                 <div class="form-group">
                     <label for="oldPass">Old password:</label>
                     <input type="password" class="form-control" name="oldPass" id="oldPass" placeholder="Old password">
@@ -198,12 +237,13 @@ echo 'hi';
                     <label for="newPass">New password:</label>
                     <input type="password" class="form-control" name="newPass" id="newPass" placeholder="New password">
                 </div>
+
+                <button class="btn btn-lg btn-primary btn-block" type="submit" name="changePass" value="changePass">
+                    Change Password
+                </button>
             </form>
         </div>
 
-        <div class="modal-footer">
-            <button type="submit" class="btn btn-default" data-dismiss="modal" id="changePass">Change</button>
-        </div>
     </div>
 </div>
 
@@ -242,10 +282,6 @@ echo 'hi';
 
     });
 
-    $( "#changePass" ).click(function() {
-        var values = $("#changePassForm").serialize();
-        window.location.replace("profile.php/?" + values);
-    });
 </script>
 
 </body>
