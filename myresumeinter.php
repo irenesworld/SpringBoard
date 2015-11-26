@@ -2,7 +2,18 @@
 // this page is the intermediary page
 // it will add resume to database
 
-function addResume($name, $url){
+require_once 'connect.php';
+session_start();
+
+if(isset($_GET['filename'])) {
+    $name = strip_tags($_GET['filename']);
+    $url = strip_tags($_GET['resumeURL']);
+
+    echo '   ';
+    echo $name;
+    echo '   ';
+    echo $url;
+    echo '   ';
     connect();
     global $conn;
 
@@ -18,5 +29,7 @@ function addResume($name, $url){
 
     close();
 }
+
+header("Location: ../myresume.php");
 
 ?>

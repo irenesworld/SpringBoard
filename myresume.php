@@ -117,7 +117,10 @@ function addResume($name, $url){
 </nav>
 
 <div class="container">
-    <input type="filepicker" data-fp-apikey="AtYeuZ9vR1ekh6P14vB5az" onchange="alert(event.fpfile.url)">
+    <button class="btn btn-default dropdown-toggle" type="button" id="uploadResume" name="uploadResume"
+            aria-haspopup="true" aria-expanded="true">
+        <span class="glyphicon glyphicon-cloud-upload"></span>
+    </button>
     <br>
     <br>
     <div class="list-group">
@@ -166,20 +169,22 @@ function addResume($name, $url){
 <script type="text/javascript" src="http://api.filepicker.io/v2/filepicker.js"></script>
 <script type="text/javascript">
     filepicker.setKey("AtYeuZ9vR1ekh6P14vB5az");
-    filepicker.pick( {
-        extension: '.pdf'
-    }
-    function(upload){
-        console.log(upload.url);
-        var filename = upload.filename;
-        var url = upload.url;
-        var id = upload.id;
-        var isWriteable = upload.isWriteable;
-        var mimetype = upload.mimetype;
-        var size = upload.size;
 
-    }
-    );
+    $('#uploadResume').click(function() {
+        filepicker.pick( {
+            extension: '.pdf'
+        }, function(upload){
+            console.log(upload.url);
+            var filename = upload.filename;
+            var url = upload.url;
+            var id = upload.id;
+            var isWriteable = upload.isWriteable;
+            var mimetype = upload.mimetype;
+            var size = upload.size;
+
+            window.location.replace("myresumeinter.php/?filename=" + filename + "&resumeURL=" + url);
+        });
+    });
 </script>
 
 </body>
