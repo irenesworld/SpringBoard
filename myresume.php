@@ -109,7 +109,7 @@ function addResume($name, $url){
                 <li><a href="aboutpage.html">About</a><li>
                 <li><a href="profiletest.php">Profile</a></li>
                 <li class="active"><a href="#">My Resumes</a></li>
-                <li><a href="#">Review Resumes</a><li>
+                <li><a href="reviewresumepage.html">Review Resumes</a><li>
                 <li><a href="#">Resources</a></li>
             </ul>
         </div>
@@ -177,6 +177,7 @@ function addResume($name, $url){
         var isWriteable = upload.isWriteable;
         var mimetype = upload.mimetype;
         var size = upload.size;
+
     }
     );
 </script>
