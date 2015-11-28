@@ -16,7 +16,7 @@ function viewByTimeStamp(){
         die('mysqli error: '.mysqli_error($conn));
     }
 
-    //mysqli_stmt_bind_param($statment, 's', $_SESSION['userid']);
+    mysqli_stmt_bind_param($statment, 's', $_SESSION['userid']);
     mysqli_stmt_execute($statment);
 
 
@@ -27,24 +27,17 @@ function viewByTimeStamp(){
 
     while($row = mysqli_stmt_fetch($statment)){
         $resumeArray[] = array($timeStamp, $name, $resumeURL);
-    }
-
-    /*foreach($resumeArray as &$row2) {
-        foreach ($row2 as &$str) {
-            echo ' ' . $str;
-        }
-    }*/
-
-    /*$result = mysqli_query($conn, $query);
-    if(mysqli_num_rows($result) > 0) {
-        while ($row = mysqli_fetch_assoc($result)) {
-            echo "ts: " . $row["ts"] . " filename: ". $row["name"] . " resume URL: " . $row["resumeURL"];
+        foreach($resumeArray as &$row2) {
+            foreach ($row2 as &$str) {
+                echo "<a href='#' class='list-group-item'>";
+                echo "<table><tr><td style='padding-right:50px'>";
+                echo $row2[0];
+                echo "</td>";
+                echo "<td>" . $row2[1] . "</td>";
+                echo "</tr></table>";
+            }
         }
     }
-    else {
-        echo 'NO';
-        echo mysqli_error($conn);
-    }*/
 
     mysqli_stmt_close($statment);
     close();
@@ -144,18 +137,32 @@ function addResume($name, $url){
             // if not hardcoded, get an error from mysqli_query
             // http://stackoverflow.com/questions/2304894/having-a-problem-getting-mysqli-query-to-execute
             // http://www.inmotionhosting.com/support/website/database-troubleshooting/error-1064
-            $query = "SELECT ts, name, resumeURL from resume where user_id = 110 order by ts DESC";
-            $result = mysqli_query($conn, $query);
-            if(mysqli_num_rows($result) > 0) {
-                while ($row = mysqli_fetch_assoc($result)) {
-                    echo "<a href='#' class='list-group-item'>";
-                    echo "<table><tr><td style='padding-right:50px'>";
-                    echo $row["ts"];
-                    echo "</td>";
-                    echo "<td>" . $row["name"] . "</td>";
-                    echo "</tr></table>";
-                }
+            $query = "SELECT ts, name, resumeURL from resume where user_id = ? order by ts DESC";
+            $statment = mysqli_prepare($conn, $query);
+            if ( !$statment ) {
+                die('mysqli error: '.mysqli_error($conn));
             }
+            mysqli_stmt_bind_param($statment, 's', $_SESSION['userid']);
+            mysqli_stmt_execute($statment);
+
+            $timeStamp = "";
+            $name = "";
+            $resumeURL = "";
+            mysqli_stmt_bind_result($statment, $timeStamp, $name, $resumeURL);
+
+                while ($row = mysqli_stmt_fetch($statment)) {
+                    $resumeArray[] = array($timeStamp, $name, $resumeURL);
+                    foreach($resumeArray as &$row2) {
+                        foreach ($row2 as &$str) {
+                            echo "<a href='#' class='list-group-item'>";
+                            echo "<table><tr><td style='padding-right:50px'>";
+                            echo $row2[0];
+                            echo "</td>";
+                            echo "<td>" . $row2[1] . "</td>";
+                            echo "</tr></table>";
+                        }
+                    }
+                }
             ?>
     </div>
 </div>
