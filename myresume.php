@@ -16,7 +16,7 @@ function viewByTimeStamp(){
         die('mysqli error: '.mysqli_error($conn));
     }
 
-    mysqli_stmt_bind_param($statment, 's', $_SESSION['userid']);
+    //mysqli_stmt_bind_param($statment, 's', $_SESSION['userid']);
     mysqli_stmt_execute($statment);
 
 
@@ -29,11 +29,22 @@ function viewByTimeStamp(){
         $resumeArray[] = array($timeStamp, $name, $resumeURL);
     }
 
-    foreach($resumeArray as &$row2){
-        foreach($row2 as &$str){
-            echo ' '.$str;
+    /*foreach($resumeArray as &$row2) {
+        foreach ($row2 as &$str) {
+            echo ' ' . $str;
+        }
+    }*/
+
+    /*$result = mysqli_query($conn, $query);
+    if(mysqli_num_rows($result) > 0) {
+        while ($row = mysqli_fetch_assoc($result)) {
+            echo "ts: " . $row["ts"] . " filename: ". $row["name"] . " resume URL: " . $row["resumeURL"];
         }
     }
+    else {
+        echo 'NO';
+        echo mysqli_error($conn);
+    }*/
 
     mysqli_stmt_close($statment);
     close();
@@ -124,45 +135,28 @@ function addResume($name, $url){
     <br>
     <br>
     <div class="list-group">
-        <a href="#" class="list-group-item">
+       <!-- <a href="#" class="list-group-item"> -->
             <!--<span class="badge">4</span>-->
-            <table>
-                <tr> <!-- ROW -->
-                    <td style="padding-right: 50px;"> <!-- COLUMN -->
-                        November 16, 2015
-                    </td>
-                    <td>
-                        IreneLaus_Resume3
-                    </td>
-                </tr>
-            </table>
-        </a>
-        <a href="#" class="list-group-item">
-            <!--<span class="badge">8</span>-->
-            <table>
-                <tr> <!-- ROW -->
-                    <td style="padding-right: 50px;"> <!-- COLUMN -->
-                        November 12, 2015
-                    </td>
-                    <td>
-                        IreneLaus_Resume2
-                    </td>
-                </tr>
-            </table>
-        </a>
-        <a href="#" class="list-group-item">
-            <!--<span class="badge">12</span>-->
-            <table>
-                <tr> <!-- ROW -->
-                    <td style="padding-right: 50px;"> <!-- COLUMN -->
-                        November 11, 2015
-                    </td>
-                    <td>
-                        IreneLaus_Resume_1
-                    </td>
-                </tr>
-            </table>
-        </a>
+            <?php
+            connect();
+            global $conn;
+            // need to fix query so it's not hardcoded as 110
+            // if not hardcoded, get an error from mysqli_query
+            // http://stackoverflow.com/questions/2304894/having-a-problem-getting-mysqli-query-to-execute
+            // http://www.inmotionhosting.com/support/website/database-troubleshooting/error-1064
+            $query = "SELECT ts, name, resumeURL from resume where user_id = 110 order by ts DESC";
+            $result = mysqli_query($conn, $query);
+            if(mysqli_num_rows($result) > 0) {
+                while ($row = mysqli_fetch_assoc($result)) {
+                    echo "<a href='#' class='list-group-item'>";
+                    echo "<table><tr><td style='padding-right:50px'>";
+                    echo $row["ts"];
+                    echo "</td>";
+                    echo "<td>" . $row["name"] . "</td>";
+                    echo "</tr></table>";
+                }
+            }
+            ?>
     </div>
 </div>
 
