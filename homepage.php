@@ -233,12 +233,12 @@ if(isset($_SESSION['userEmail'])) {
         </div>
         <div>
             <ul class="nav navbar-nav" >
-                <li class="active"><a href="homepage.php" id="homelink">Home</a></li>
-                <li><a href="aboutpage.html" id="aboutlink" class="disabled">About</a><li>
-                <li class="<?php echo $enabled ?>"><a href="profilepage.php">Profile</a></li>
-                <li class="<?php echo $enabled ?>"><a href="myresume.php">My Resumes</a></li>
-                <li class="<?php echo $enabled ?>"><a href="reviewresumes.php">Review Resumes</a><li>
-                <li class="<?php echo $enabled ?>"><a href="#">Resources</a></li>
+                <li class="active"><button type="button" class="btn btn-link" onclick="location.href='homepage.php';">Home</button></li>
+                <li><button type="button" class="btn btn-link" onclick="location.href='about.php';">About</button></li>
+                <li><button type="button" class="btn btn-link" onclick="location.href='profilepage.php';" <?php echo $enabled ?>>Profile</button></li>
+                <li><button type="button" class="btn btn-link" onclick="location.href='myresume.php';" <?php echo $enabled ?>>My Resumes</button></li>
+                <li><button type="button" class="btn btn-link" onclick="location.href='reviewresume.php';" <?php echo $enabled ?>>Review Resumes</button></li>
+                <li><button type="button" class="btn btn-link" onclick="location.href='resources.php';" <?php echo $enabled ?>>Resources</button></li>
             </ul>
         </div>
     </div>
