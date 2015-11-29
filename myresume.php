@@ -1,6 +1,6 @@
 <?php
 // hi kramer
-
+//hi irene
 require_once 'connect.php';
 require_once 'login.php';
 
@@ -16,7 +16,7 @@ function viewByTimeStamp(){
         die('mysqli error: '.mysqli_error($conn));
     }
 
-    mysqli_stmt_bind_param($statment, 's', $_SESSION['userid']);
+    mysqli_stmt_bind_param($statment, 'i', $_SESSION['userid']);
     mysqli_stmt_execute($statment);
 
 
