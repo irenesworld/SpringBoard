@@ -5,7 +5,7 @@ require_once 'connect.php';
 require_once 'login.php';
 
 $resumeArray = array();
-viewByTimeStamp();
+//viewByTimeStamp();
 
 function viewByTimeStamp(){
     connect();
@@ -142,7 +142,7 @@ function addResume($name, $url){
             if ( !$statment ) {
                 die('mysqli error: '.mysqli_error($conn));
             }
-            mysqli_stmt_bind_param($statment, 's', $_SESSION['userid']);
+            mysqli_stmt_bind_param($statment, 'i', $_SESSION['userid']);
             mysqli_stmt_execute($statment);
 
             $timeStamp = "";

@@ -80,4 +80,5 @@ function viewByMajor($major){
     close();
 }
 
+
 ?>
