@@ -95,7 +95,8 @@ function addResume($name, $url){
     <table align="center" width=100%>
         <tr> <!-- ROW -->
             <td> <!-- COLUMN -->
-                <h1>&nbsp;SpringBoard</h1>
+                <img src="images/finallogo.png" width="300px" style="padding:5px"/>
+                <br>
             </td>
             <td>
                 <br>
