@@ -27,13 +27,17 @@ function viewByTimeStamp(){
     while ($row = mysqli_stmt_fetch($statment)) {
         $resumeArray[] = array($timeStamp, $userName, $fileName, $resumeURL);
     }
+    // maybe change table
     foreach($resumeArray as &$row2) {
         echo "<a href='#' class='list-group-item'>";
-        echo "<table><tr><td style='padding-right:50px'>";
-        echo $row2[0];
-        echo "</td>";
-        echo "<td>" . $row2[1] . "</td>";
-        echo "</tr></table>";
+        echo "<div class='row'>";
+        echo "<div class='col-md-4'>";
+        echo $row2[0] . "</div>";
+        echo "<div class='col-md-4'>";
+        echo $row2[1] . "</div>";
+        echo "<div class='col-md-4'>";
+        echo $row2[2] . "</div>";
+        echo "</div></a>";
     }
 
     mysqli_stmt_close($statment);
@@ -85,6 +89,13 @@ function viewByMajor($major){
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <style>
+        @media (min-width: 1000px) {
+            .container{
+                max-width: 800px;
+            }
+        }
+    </style>
 
 </head>
 
@@ -137,6 +148,8 @@ function viewByMajor($major){
             <li><a href="#">Date Posted</a></li>
         </ul>
     </div>
+    <br>
+    <br>
     <div class="list-group">
         <?php
             viewByTimeStamp();

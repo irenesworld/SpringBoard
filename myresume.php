@@ -70,18 +70,13 @@ function addResume($name, $url){
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 
-    <script type = "text/javascript">
-        count = 0;
-        imgs = ["pic1.jpg", "pic2.jpg"];
-
-        function changeFirstPic()
-        {
-            count++;
-            if (count > 2)
-                count = 1;
-            img1.src = "images/" + imgs[count - 1];
-        }
-    </script>
+   <style>
+       @media (min-width: 1000px) {
+           .container{
+               max-width: 800px;
+           }
+       }
+   </style>
 
 </head>
 
