@@ -2,8 +2,15 @@
 // hi kramer
 //hi irene
 
-/*require_once 'connect.php';
+require_once 'connect.php';
 require_once 'login.php';
+
+$membership = new Membership();
+if(!($membership->isLoggedIn())){
+    redirect("../springboard/homepage.php");
+    return;
+}
+
 
 $resumeArray = array();
 
@@ -94,8 +101,28 @@ function getAllCommentsAndVotes($resumeID){
     mysqli_stmt_bind_param($statment, 'i', $resumeID);
     mysqli_stmt_execute($statment);
 
-    // to be continued..
-}*/
+    $idcomment = "";
+    $authorID = "";
+    $parent_ID = "";
+    $ts = "";
+    $commentString = "";
+    mysqli_stmt_bind_result($statment, $idcomment, $authorID, $resumeID, $parent_ID, $ts, $commentString);
+
+    while ($row = mysqli_stmt_fetch($statment)) {
+        $resumeArray[] = array($idcomment, $authorID, $ts, $commentString, $parent_ID, $ts, $commentString);
+    }
+
+    if(!empty($resumeArray)) {
+        foreach ($resumeArray as &$row2) {
+            if(!$row2[4]){//parent is null
+
+            }else{
+
+            }
+        }
+    }else{
+            echo 'There are currently 0 reumes on the site.';
+    }
 
 ?>
 
