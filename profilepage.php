@@ -138,9 +138,9 @@ if(isset($_POST['changePass'])) {
         </div>
         <div>
             <ul class="nav navbar-nav" >
-                <li><a href="hometest.php">Home</a></li>
+                <li><a href="homepage.php">Home</a></li>
                 <li><a href="aboutpage.html">About</a><li>
-                <li class="active"><a href="profiletest.php">Profile</a></li>
+                <li class="active"><a href="profilepage.php">Profile</a></li>
                 <li><a href="myresume.php">My Resumes</a></li>
                 <li><a href="reviewresumepage.html">Review Resumes</a><li>
                 <li><a href="#">Resources</a></li>
@@ -272,7 +272,7 @@ if(isset($_POST['changePass'])) {
             // Save to a database somewhere
             // Alternatively you can have filepicker do it for you: https://www.filepicker.com/documentation/storage/
 
-            window.location.replace("profile.php/?changepic=" + picurl);
+            window.location.replace("profileinter.php/?changepic=" + picurl);
             $("#profpic").attr("src", blob.url);
 
         });

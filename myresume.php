@@ -1,6 +1,9 @@
 <?php
 // hi kramer
 //hi irene
+
+// what about deleting resumes?
+
 require_once 'connect.php';
 require_once 'login.php';
 
@@ -34,7 +37,7 @@ function viewByTimeStamp(){
         echo $row2[0];
         echo "</td>";
         echo "<td>" . $row2[1] . "</td>";
-        echo "</tr></table>";
+        echo "</tr></table></a>";
     }
 
     mysqli_stmt_close($statment);
@@ -102,9 +105,9 @@ function addResume($name, $url){
         </div>
         <div>
             <ul class="nav navbar-nav" >
-                <li><a href="hometest.php">Home</a></li>
+                <li><a href="homepage.php">Home</a></li>
                 <li><a href="aboutpage.html">About</a><li>
-                <li><a href="profiletest.php">Profile</a></li>
+                <li><a href="profilepage.php">Profile</a></li>
                 <li class="active"><a href="#">My Resumes</a></li>
                 <li><a href="reviewresumes.php">Review Resumes</a><li>
                 <li><a href="#">Resources</a></li>

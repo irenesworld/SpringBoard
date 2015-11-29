@@ -84,13 +84,13 @@ function changePicture($pictureURL){
     if(mysqli_stmt_fetch($statment)){
         mysqli_stmt_close($statment);
         //header("Location: ../profiletest.php");
-        redirect("../profiletest.php");
+        redirect("../profilepage.php");
         close();
         return true;
     }else{
         mysqli_stmt_close($statment);
         //header("Location: ../profiletest.php");
-        redirect("../profiletest.php");
+        redirect("../profilepage.php");
         close();
         return false;
     }
