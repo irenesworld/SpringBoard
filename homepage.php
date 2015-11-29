@@ -131,6 +131,82 @@ if(isset($_SESSION['userEmail'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 
+    <link href='https://fonts.googleapis.com/css?family=Lato|Open+Sans:300' rel='stylesheet' type='text/css'>
+
+    <style>
+        .bg {
+
+        }
+        body {
+            font-family: 'Lato', sans-serif;
+            font-color: #a6a6a6;
+        }
+
+        .container {
+            background-color: white;
+        }
+
+        .header {
+            background-color: white;
+        }
+
+        .custom-navbar > .navbar-default {
+            background: white !important;
+            border-color: transparent !important;
+            list-style: none;
+            padding-left:10px;
+        }
+
+        .custom-navbar .navbar-nav {
+        }
+
+        .custom-navbar .navbar-nav > li {
+        }
+
+        .custom-navbar .navbar-nav > li > a {
+            padding-top: 5px;
+            padding-bottom: 5px;
+        }
+
+        .form-group > label {
+            font-weight: 300;
+        }
+
+        .btn {
+            padding: 10px 10px;
+            border: 0 none;
+            letter-spacing: 1px;
+            border-radius: 0;
+        }
+
+        .btn:focus, .btn:active:focus, .btn.active:focus {
+            outline: 0 none;
+        }
+
+        .btn-primary {
+            background: #F25F5C;
+            color: #ffffff;
+        }
+
+        .btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open > .dropdown-toggle.btn-primary {
+            background: rgba(242, 95, 92, 0.64);
+        }
+
+        .btn-primary:active, .btn-primary.active {
+            background: rgba(242, 95, 92, 0.55);
+            box-shadow: none;
+        }
+
+       /* @import url(http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css);
+        .navbar-default {
+            background-color:teal;
+            background-image: none;
+            background-repeat: no-repeat;
+        }
+        .navbar-default > li > a {
+            color: blue;
+        }*/
+    </style>
 </head>
 
 <body>
@@ -144,30 +220,32 @@ if(isset($_SESSION['userEmail'])) {
             </td>
             <td>
                 <br>
-                <p align="right"><a href="#bottom">Log in</a>  |  <a href="#bottom">Sign up</a> &nbsp;</p>
+                <p align="right"><a href="#bottom">Log in</a>&nbsp;&nbsp;  |&nbsp;&nbsp;  <a href="#bottom">Sign up</a> &nbsp;</p>
             </td>
         </tr>
     </table>
 </div>
 
-<nav class="navbar navbar-inverse">
+<div class="custom-navbar">
+<nav class="navbar navbar-default">
     <div class="container-fluid">
         <div class="navbar-header">
         </div>
         <div>
             <ul class="nav navbar-nav" >
-                <li class="active"><a href="homepage.php" id="homelink">Home</a></li>
-                <li><a href="aboutpage.html" id="aboutlink" class="disabled">About</a><li>
-                <li class="<?php echo $enabled ?>"><a href="profilepage.php">Profile</a></li>
-                <li class="<?php echo $enabled ?>"><a href="myresume.php">My Resumes</a></li>
-                <li class="<?php echo $enabled ?>"><a href="reviewresumes.php">Review Resumes</a><li>
-                <li class="<?php echo $enabled ?>"><a href="#">Resources</a></li>
+                <li class="active"><button type="button" class="btn btn-link" onclick="location.href='homepage.php';">Home</button></li>
+                <li><button type="button" class="btn btn-link" onclick="location.href='about.php';">About</button></li>
+                <li><button type="button" class="btn btn-link" onclick="location.href='profilepage.php';" <?php echo $enabled ?>>Profile</button></li>
+                <li><button type="button" class="btn btn-link" onclick="location.href='myresume.php';" <?php echo $enabled ?>>My Resumes</button></li>
+                <li><button type="button" class="btn btn-link" onclick="location.href='reviewresume.php';" <?php echo $enabled ?>>Review Resumes</button></li>
+                <li><button type="button" class="btn btn-link" onclick="location.href='resources.php';" <?php echo $enabled ?>>Resources</button></li>
             </ul>
         </div>
     </div>
 </nav>
+</div>
 
-
+<div class="bg">
 <div class="container" style="text-align:center">
     <img id = "img1" src="images/pic1.jpg" width="85%"/>
     <br>
@@ -181,7 +259,7 @@ if(isset($_SESSION['userEmail'])) {
         <div class="col-md-5" style="padding-right:40px;">
             <br>
             <a name="bottom"></a>
-            <h1 class="text-center login-title">Sign in</h1>
+            <h3 class="text-center">Sign in</h3>
             <br>
             <form class="form-horizontal" role="form" method="post" action=<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?> >
                 <div class="form-group">
@@ -194,15 +272,15 @@ if(isset($_SESSION['userEmail'])) {
                     <input type="password" class="form-control" name="loginPwd" id="loginPwd" placeholder="Password">
                     <span class="error"> <?php echo $loginPwdError;?></span>
                 </div>
-               <button class="btn btn-lg btn-primary btn-block" name="signin" type="submit">
+               <div style="text-align:right"><button class="btn btn-primary" name="signin" type="submit">
                      Sign in
-                </button>
+                </button></div>
             </form>
         </div>
 
         <div class="col-md-5" style="padding-left:40px; border-left: 1px solid #ccc;">
             <br>
-            <h1 class="text-center login-title">New User? Sign Up!</h1>
+            <h3 class="text-center">New User? Sign Up!</h3>
             <br>
             <form class="form-horizontal" role="form" method="post" action=<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?> >
                 <div class="form-group">
@@ -232,9 +310,9 @@ if(isset($_SESSION['userEmail'])) {
                     <input type="text" class="form-control" name="major" id="major" placeholder="Major">
                     <span class="error"> <?php echo $majorError;?></span>
                 </div>
-                <button class="btn btn-lg btn-primary btn-block" type="submit" name="register" value="register">
+                <div style="text-align:right"><button class="btn btn-primary" type="submit" name="register" value="register">
                     Register
-                </button>
+                </button></div>
                 <br>
                 <br>
             </form>
@@ -246,6 +324,7 @@ if(isset($_SESSION['userEmail'])) {
 
 <br>
 <br>
+</div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
