@@ -133,9 +133,9 @@ function getAllCommentsAndVotes($resumeID){
         </div>
         <div>
             <ul class="nav navbar-nav" >
-                <li><a href="hometest.php">Home</a></li>
+                <li><a href="homepage.php">Home</a></li>
                 <li><a href="aboutpage.html">About</a><li>
-                <li><a href="profiletest.php">Profile</a></li>
+                <li><a href="profilepage.php">Profile</a></li>
                 <li><a href="myresume.php">My Resumes</a></li>
                 <li><a href="reviewresumes.php">Review Resumes</a><li>
                 <li><a href="#">Resources</a></li>
