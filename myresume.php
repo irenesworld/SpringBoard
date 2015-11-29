@@ -31,13 +31,19 @@ function viewByTimeStamp(){
     while ($row = mysqli_stmt_fetch($statment)) {
         $resumeArray[] = array($timeStamp, $name, $resumeURL);
     }
-    foreach($resumeArray as &$row2) {
-        echo "<a href='viewresume.php?resumeURL=". $row2[2] . "' class='list-group-item'>";
-        echo "<table><tr><td style='padding-right:50px'>";
-        echo $row2[0];
-        echo "</td>";
-        echo "<td>" . $row2[1] . "</td>";
-        echo "</tr></table></a>";
+
+    if(!empty($resumeArray)) {
+        foreach ($resumeArray as &$row2) {
+            echo "<a href='viewresume.php?resumeURL=" . $row2[2] . "' class='list-group-item'>";
+            echo "<table><tr><td style='padding-right:50px'>";
+            echo $row2[0];
+            echo "</td>";
+            echo "<td>" . $row2[1] . "</td>";
+            echo "</tr></table></a>";
+        }
+    }
+    else {
+        echo 'You have not submitted any resumes.';
     }
 
     mysqli_stmt_close($statment);
@@ -120,6 +126,7 @@ function addResume($name, $url){
     <button class="btn btn-default dropdown-toggle" type="button" id="uploadResume" name="uploadResume"
             aria-haspopup="true" aria-expanded="true">
         <span class="glyphicon glyphicon-cloud-upload"></span>
+        &nbsp; Upload Resume
     </button>
     <br>
     <br>
