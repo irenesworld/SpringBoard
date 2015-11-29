@@ -144,7 +144,7 @@ if(isset($_SESSION['userEmail'])) {
             </td>
             <td>
                 <br>
-                <p align="right">Log in  |  Sign up &nbsp;</p>
+                <p align="right"><a href="#bottom">Log in</a>  |  <a href="#bottom">Sign up</a> &nbsp;</p>
             </td>
         </tr>
     </table>
@@ -185,6 +185,7 @@ img1 = document.getElementById("img1");
         </div>
         <div class="col-md-5" style="padding-right:40px;">
             <br>
+            <a name="bottom"></a>
             <h1 class="text-center login-title">Sign in</h1>
             <br>
             <form class="form-horizontal" role="form" method="post" action=<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?> >

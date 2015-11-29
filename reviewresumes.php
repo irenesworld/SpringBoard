@@ -174,7 +174,7 @@ function viewByMajor(){
             </td>
             <td>
                 <br>
-                <a href="logout.php"></a><p align="right">Sign out &nbsp;</p></a>
+                <p align="right"><a href="logout.php">Sign out</a>&nbsp;</p>
             </td>
         </tr>
     </table>

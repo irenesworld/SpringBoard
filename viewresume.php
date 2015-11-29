@@ -121,7 +121,7 @@ function getAllCommentsAndVotes($resumeID){
             </td>
             <td>
                 <br>
-                <a href="logout.php"><p align="right">Sign out &nbsp;</p></a>
+                <p align="right"><a href="logout.php">Sign out</a>&nbsp;</p>
             </td>
         </tr>
     </table>
