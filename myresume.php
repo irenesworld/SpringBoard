@@ -111,7 +111,7 @@ function addResume($name, $url){
                 <li><a href="aboutpage.html">About</a><li>
                 <li><a href="profiletest.php">Profile</a></li>
                 <li class="active"><a href="#">My Resumes</a></li>
-                <li><a href="reviewresumepage.html">Review Resumes</a><li>
+                <li><a href="reviewresumes.php">Review Resumes</a><li>
                 <li><a href="#">Resources</a></li>
             </ul>
         </div>
