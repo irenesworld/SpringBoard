@@ -16,8 +16,6 @@ function connect(){
         die('Error: Could not connect to database.');
     }
 
-    //echo '  CONNECTED TO DATABASE  ';
-    //echo "\r\n";
 }
 
 function close(){

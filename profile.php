@@ -76,7 +76,6 @@ function changePicture($pictureURL){
         die('mysqli error: '.mysqli_error($conn));
     }
 
-    echo '    user email: ';
     echo $userEmail;
 
     mysqli_stmt_bind_param($statment, 'ss', $pictureURL, $userEmail);

@@ -8,8 +8,6 @@ $name = "";
 $major = "";
 $university = "";
 
-
-echo 'goes inside isset(profpic)    ';
 connect();
 global $conn;
 
@@ -28,7 +26,6 @@ mysqli_stmt_bind_result($statment, $pictureURL, $name, $major, $university);
 
 
 if(mysqli_stmt_fetch($statment)){
-    echo 'pictureurl is '.$pictureURL.' name is '.$name.' major is '.$major.' uni is '.$university;
     mysqli_stmt_close($statment);
     close();
 }else{

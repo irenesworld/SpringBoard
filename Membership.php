@@ -14,7 +14,6 @@ class Membership
         connect();
         global $conn;
 
-        echo 'try to login with '. $email . " " . $password;
         $query = "SELECT iduser FROM user WHERE email = ? AND password = ? LIMIT 1";
 
         $statment = mysqli_prepare($conn,$query);
@@ -57,19 +56,15 @@ class Membership
     }
 
     function login($email, $password){
-        echo ' in login of membershop ';
         $response = $this->validateUser($email, $password);
 
         if($response){
-            echo 'logged in';
             $_SESSION['status'] = 'authorized';
             $_SESSION['userid'] = $response;
             $_SESSION['userEmail'] = $email;
-            echo $response;
             return true;
         }else{
             return false;
-            echo 'NOT NOT NOT NOT logged in';
         }
     }
 }
