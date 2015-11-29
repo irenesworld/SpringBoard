@@ -168,16 +168,11 @@ if(isset($_SESSION['userEmail'])) {
 </nav>
 
 
-<div class="container">
-    <center><img id = "img1" src="images/pic1.jpg" height="85%" width="85%"/></center>
+<div class="container" style="text-align:center">
+    <img id = "img1" src="images/pic1.jpg" width="85%"/>
     <br>
     <br>
 </div>
-
-<script type = "text/javascript">
-img1 = document.getElementById("img1");
-    setInterval("changeFirstPic()", 5000);
-</script>
 
 <div class="container">
     <div class="row">
@@ -254,7 +249,10 @@ img1 = document.getElementById("img1");
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-
+<script type = "text/javascript">
+    img1 = document.getElementById("img1");
+    setInterval("changeFirstPic()", 5000);
+</script>
 <script type = "text/javascript">
     count = 0;
     imgs = ["pic1.jpg", "pic2.jpg"];
