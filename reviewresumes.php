@@ -11,10 +11,16 @@ require_once 'login.php';
 $resumeArray = array();
 //viewByTimeStamp();
 
+$membership = new Membership();
+if(!($membership->isLoggedIn())){
+    redirect("../springboard/homepage.php");
+    return;
+}
+
 function viewByTimeStamp(){
     connect();
     global $conn;
-    $query = "SELECT ts, user.username, user.major, user.universityID, resume.name, resumeURL from user natural join resume order by ts DESC";
+    $query = "SELECT ts, user.username, user.major, user.universityID, resume.name, resumeURL from user, resume where iduser = user_id order by ts DESC";
     $statment = mysqli_prepare($conn, $query);
     if ( !$statment ) {
         die('mysqli error: '.mysqli_error($conn));
@@ -57,7 +63,7 @@ function viewByTimeStamp(){
 function viewByName() {
     connect();
     global $conn;
-    $query = "SELECT ts, user.username, user.major, user.universityID, resume.name, resumeURL from user natural join resume order by user.username";
+    $query = "SELECT ts, user.username, user.major, user.universityID, resume.name, resumeURL from user, resume where iduser = user_id order by user.username";
     $statment = mysqli_prepare($conn, $query);
     if ( !$statment ) {
         die('mysqli error: '.mysqli_error($conn));
@@ -100,7 +106,7 @@ function viewByName() {
 function viewByMajor(){
     connect();
     global $conn;
-    $query = "SELECT ts, user.username, user.major, user.universityID, resume.name, resumeURL from user natural join resume order by user.major";
+    $query = "SELECT ts, user.username, user.major, user.universityID, resume.name, resumeURL from user, resume where user_id = iduser order by user.major";
     $statment = mysqli_prepare($conn, $query);
     if ( !$statment ) {
         die('mysqli error: '.mysqli_error($conn));

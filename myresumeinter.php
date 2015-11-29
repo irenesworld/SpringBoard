@@ -3,6 +3,13 @@
 // it will add resume to database
 
 require_once 'connect.php';
+
+$membership = new Membership();
+if(!($membership->isLoggedIn())){
+    redirect("../springboard/homepage.php");
+    return;
+}
+
 session_start();
 
 if(isset($_GET['filename'])) {
