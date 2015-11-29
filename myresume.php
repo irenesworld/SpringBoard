@@ -25,18 +25,16 @@ function viewByTimeStamp(){
     $resumeURL = "";
     mysqli_stmt_bind_result($statment, $timeStamp, $name, $resumeURL);
 
-    while($row = mysqli_stmt_fetch($statment)){
+    while ($row = mysqli_stmt_fetch($statment)) {
         $resumeArray[] = array($timeStamp, $name, $resumeURL);
-        foreach($resumeArray as &$row2) {
-            foreach ($row2 as &$str) {
-                echo "<a href='#' class='list-group-item'>";
-                echo "<table><tr><td style='padding-right:50px'>";
-                echo $row2[0];
-                echo "</td>";
-                echo "<td>" . $row2[1] . "</td>";
-                echo "</tr></table>";
-            }
-        }
+    }
+    foreach($resumeArray as &$row2) {
+        echo "<a href='#' class='list-group-item'>";
+        echo "<table><tr><td style='padding-right:50px'>";
+        echo $row2[0];
+        echo "</td>";
+        echo "<td>" . $row2[1] . "</td>";
+        echo "</tr></table>";
     }
 
     mysqli_stmt_close($statment);
@@ -150,19 +148,17 @@ function addResume($name, $url){
             $resumeURL = "";
             mysqli_stmt_bind_result($statment, $timeStamp, $name, $resumeURL);
 
-                while ($row = mysqli_stmt_fetch($statment)) {
-                    $resumeArray[] = array($timeStamp, $name, $resumeURL);
-                    foreach($resumeArray as &$row2) {
-                        foreach ($row2 as &$str) {
-                            echo "<a href='#' class='list-group-item'>";
-                            echo "<table><tr><td style='padding-right:50px'>";
-                            echo $row2[0];
-                            echo "</td>";
-                            echo "<td>" . $row2[1] . "</td>";
-                            echo "</tr></table>";
-                        }
-                    }
-                }
+            while ($row = mysqli_stmt_fetch($statment)) {
+                $resumeArray[] = array($timeStamp, $name, $resumeURL);
+            }
+            foreach($resumeArray as &$row2) {
+                echo "<a href='#' class='list-group-item'>";
+                echo "<table><tr><td style='padding-right:50px'>";
+                echo $row2[0];
+                echo "</td>";
+                echo "<td>" . $row2[1] . "</td>";
+                echo "</tr></table>";
+            }
             ?>
     </div>
 </div>
