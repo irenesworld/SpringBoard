@@ -2,6 +2,9 @@
 // hi kramer
 //hi irene
 
+// hmm... i think it populates kinda weird
+// there are a lot of users that have IreneLau_Resume.pdf for some reason?
+
 require_once 'connect.php';
 require_once 'login.php';
 
@@ -32,7 +35,7 @@ function viewByTimeStamp(){
     }
     // maybe change table
     foreach($resumeArray as &$row2) {
-        echo "<a href='#' class='list-group-item'>";
+        echo "<a href='viewresume.php?resumeURL=" . $row2[5] . "' class='list-group-item'>";
         echo "<div class='row'>";
         echo "<div class='col-md-3'>";
         echo $row2[0] . "</div>";
@@ -54,7 +57,7 @@ function viewByTimeStamp(){
 function viewByName() {
     connect();
     global $conn;
-    $query = "SELECT ts, user.username, user.major, user.universityID, resume.name, resumeURL from user natural join resume order by user.username DESC";
+    $query = "SELECT ts, user.username, user.major, user.universityID, resume.name, resumeURL from user natural join resume order by user.username";
     $statment = mysqli_prepare($conn, $query);
     if ( !$statment ) {
         die('mysqli error: '.mysqli_error($conn));
@@ -75,7 +78,7 @@ function viewByName() {
     }
     // maybe change table
     foreach($resumeArray as &$row2) {
-        echo "<a href='#' class='list-group-item'>";
+        echo "<a href='viewresume.php?resumeURL=" . $row2[5] . "' class='list-group-item'>";
         echo "<div class='row'>";
         echo "<div class='col-md-3'>";
         echo $row2[0] . "</div>";
@@ -97,7 +100,7 @@ function viewByName() {
 function viewByMajor(){
     connect();
     global $conn;
-    $query = "SELECT ts, user.username, user.major, user.universityID, resume.name, resumeURL from user natural join resume order by user.major DESC";
+    $query = "SELECT ts, user.username, user.major, user.universityID, resume.name, resumeURL from user natural join resume order by user.major";
     $statment = mysqli_prepare($conn, $query);
     if ( !$statment ) {
         die('mysqli error: '.mysqli_error($conn));
@@ -118,7 +121,7 @@ function viewByMajor(){
     }
     // maybe change table
     foreach($resumeArray as &$row2) {
-        echo "<a href='#' class='list-group-item'>";
+        echo "<a href='viewresume.php?resumeURL=" . $row2[5] . "'class='list-group-item'>";
         echo "<div class='row'>";
         echo "<div class='col-md-3'>";
         echo $row2[0] . "</div>";

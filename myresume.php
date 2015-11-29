@@ -29,7 +29,7 @@ function viewByTimeStamp(){
         $resumeArray[] = array($timeStamp, $name, $resumeURL);
     }
     foreach($resumeArray as &$row2) {
-        echo "<a href='#' class='list-group-item'>";
+        echo "<a href='viewresume.php?resumeURL=". $row2[2] . "' class='list-group-item'>";
         echo "<table><tr><td style='padding-right:50px'>";
         echo $row2[0];
         echo "</td>";
