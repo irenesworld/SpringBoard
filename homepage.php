@@ -120,7 +120,6 @@ function createUser($name, $email, $password, $major, $universityID){
 $enabled = "disabled";
 if(isset($_SESSION['userEmail'])) {
     $enabled = "enabled";
-    echo 'there is a session going on';
 }
 
 ?>

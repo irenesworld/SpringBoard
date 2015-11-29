@@ -80,11 +80,11 @@ function addResume($name, $url){
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 
    <style>
-       @media (min-width: 1000px) {
+       /*@media (min-width: 1000px) {
            .container{
                max-width: 800px;
            }
-       }
+       }*/
    </style>
 
 </head>
