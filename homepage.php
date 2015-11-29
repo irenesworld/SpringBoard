@@ -27,24 +27,6 @@ $loginPwd = "";
 $loginEmailError = "";
 $loginPwdError = "";
 
-function redirect($url)
-{
-    if (!headers_sent())
-    {
-        header('Location: '.$url);
-        exit;
-    }
-    else
-    {
-        echo '<script type="text/javascript">';
-        echo 'window.location.href="'.$url.'";';
-        echo '</script>';
-        echo '<noscript>';
-        echo '<meta http-equiv="refresh" content="0;url='.$url.'" />';
-        echo '</noscript>'; exit;
-    }
-}
-
 if(isset($_POST['signin'])) {
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (empty($_POST["loginEmail"]) || !filter_var($_POST['loginEmail'], FILTER_VALIDATE_EMAIL)) {
@@ -136,8 +118,9 @@ function createUser($name, $email, $password, $major, $universityID){
 }
 
 $enabled = "disabled";
-if(isset($_SESSION)) {
+if(isset($_SESSION['userEmail'])) {
     $enabled = "enabled";
+    echo 'there is a session going on';
 }
 
 ?>

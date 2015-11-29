@@ -37,6 +37,7 @@ class Membership
     }
 
     function logout(){
+        echo 'logging out';
         if(isset($_SESSION['status'])){
             unset($_SESSION['status']);
 

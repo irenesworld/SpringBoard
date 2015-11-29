@@ -11,9 +11,28 @@ function login($email, $password){
     return $response; // true or false
 }
 
-function logout(){
+function signout() {
+    echo 'signing out';
     global $membership;
     $membership->logout();
+    redirect('homepage.php');
 }
 
+function redirect($url)
+{
+    if (!headers_sent())
+    {
+        header('Location: '.$url);
+        exit;
+    }
+    else
+    {
+        echo '<script type="text/javascript">';
+        echo 'window.location.href="'.$url.'";';
+        echo '</script>';
+        echo '<noscript>';
+        echo '<meta http-equiv="refresh" content="0;url='.$url.'" />';
+        echo '</noscript>'; exit;
+    }
+}
 ?>

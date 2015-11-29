@@ -122,7 +122,7 @@ if(isset($_POST['changePass'])) {
             </td>
             <td>
                 <br>
-                <p align="right">Log in  |  Sign up &nbsp;</p>
+                <a href="logout.php"><p align="right">Sign out &nbsp;</p></a>
             </td>
         </tr>
     </table>
