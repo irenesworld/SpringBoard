@@ -126,39 +126,8 @@ function addResume($name, $url){
     <br>
     <br>
     <div class="list-group">
-       <!-- <a href="#" class="list-group-item"> -->
-            <!--<span class="badge">4</span>-->
             <?php
-            connect();
-            global $conn;
-            // need to fix query so it's not hardcoded as 110
-            // if not hardcoded, get an error from mysqli_query
-            // http://stackoverflow.com/questions/2304894/having-a-problem-getting-mysqli-query-to-execute
-            // http://www.inmotionhosting.com/support/website/database-troubleshooting/error-1064
-            $query = "SELECT ts, name, resumeURL from resume where user_id = ? order by ts DESC";
-            $statment = mysqli_prepare($conn, $query);
-            if ( !$statment ) {
-                die('mysqli error: '.mysqli_error($conn));
-            }
-            mysqli_stmt_bind_param($statment, 'i', $_SESSION['userid']);
-            mysqli_stmt_execute($statment);
-
-            $timeStamp = "";
-            $name = "";
-            $resumeURL = "";
-            mysqli_stmt_bind_result($statment, $timeStamp, $name, $resumeURL);
-
-            while ($row = mysqli_stmt_fetch($statment)) {
-                $resumeArray[] = array($timeStamp, $name, $resumeURL);
-            }
-            foreach($resumeArray as &$row2) {
-                echo "<a href='#' class='list-group-item'>";
-                echo "<table><tr><td style='padding-right:50px'>";
-                echo $row2[0];
-                echo "</td>";
-                echo "<td>" . $row2[1] . "</td>";
-                echo "</tr></table>";
-            }
+                viewByTimeStamp();
             ?>
     </div>
 </div>
