@@ -11,7 +11,7 @@ $resumeArray = array();
 function viewByTimeStamp(){
     connect();
     global $conn;
-    $query = "SELECT ts, user.username, resume.name, resumeURL from user natural join resume order by ts DESC";
+    $query = "SELECT ts, user.username, user.major, resume.name, resumeURL from user natural join resume order by ts DESC";
     $statment = mysqli_prepare($conn, $query);
     if ( !$statment ) {
         die('mysqli error: '.mysqli_error($conn));
@@ -20,23 +20,27 @@ function viewByTimeStamp(){
     mysqli_stmt_execute($statment);
 
     $timeStamp = "";
-    $name = "";
+    $userName = "";
+    $userMajor = "";
+    $fileName = "";
     $resumeURL = "";
-    mysqli_stmt_bind_result($statment, $timeStamp, $userName, $fileName, $resumeURL);
+    mysqli_stmt_bind_result($statment, $timeStamp, $userName, $userMajor, $fileName, $resumeURL);
 
     while ($row = mysqli_stmt_fetch($statment)) {
-        $resumeArray[] = array($timeStamp, $userName, $fileName, $resumeURL);
+        $resumeArray[] = array($timeStamp, $userName, $userMajor, $fileName, $resumeURL);
     }
     // maybe change table
     foreach($resumeArray as &$row2) {
         echo "<a href='#' class='list-group-item'>";
         echo "<div class='row'>";
-        echo "<div class='col-md-4'>";
+        echo "<div class='col-md-3'>";
         echo $row2[0] . "</div>";
-        echo "<div class='col-md-4'>";
+        echo "<div class='col-md-3'>";
         echo $row2[1] . "</div>";
-        echo "<div class='col-md-4'>";
+        echo "<div class='col-md-3'>";
         echo $row2[2] . "</div>";
+        echo "<div class='col-md-3'>";
+        echo $row2[3] . "</div>";
         echo "</div></a>";
     }
 
@@ -62,7 +66,7 @@ function viewByMajor($major){
     mysqli_stmt_bind_result($statment, $timeStamp, $userName, $resumeName, $resumeURL);
 
     while ($row = mysqli_stmt_fetch($statment)) {
-        $resumeArray[] = array($timeStamp, $name, $resumeURL);
+        $resumeArray[] = array($timeStamp, $userName, $resumeName, $resumeURL);
     }
     foreach($resumeArray as &$row2) {
         echo "<a href='#' class='list-group-item'>";
@@ -124,8 +128,8 @@ function viewByMajor($major){
                 <li><a href="hometest.php">Home</a></li>
                 <li><a href="aboutpage.html">About</a><li>
                 <li><a href="profiletest.php">Profile</a></li>
-                <li class="active"><a href="#">My Resumes</a></li>
-                <li><a href="reviewresumepage.html">Review Resumes</a><li>
+                <li><a href="myresume.php">My Resumes</a></li>
+                <li class="active"><a href="#">Review Resumes</a><li>
                 <li><a href="#">Resources</a></li>
             </ul>
         </div>
@@ -142,17 +146,37 @@ function viewByMajor($major){
             <span class="caret"></span>
         </button>
         <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="filter">
-            <li><a href="#">Name</a></li>
-            <li><a href="#">Major</a></li>
-            <li><a href="#">University</a></li>
-            <li><a href="#">Date Posted</a></li>
+            <li><a href="reviewresumes.php/?filter=name">Name</a></li>
+            <li><a href="reviewresumes.php/?filter=major">Major</a></li>
+            <li><a href="reviewresumes.php/?filter=university">University</a></li>
+            <li><a href="reviewresumes.php/?filter=date">Date Posted</a></li>
         </ul>
     </div>
     <br>
     <br>
     <div class="list-group">
         <?php
-            viewByTimeStamp();
+            if(isset($_GET['filter'])) {
+                $filt = htmlspecialchars($_GET['filter']);
+                if(!strcmp($filt, "name")) {
+                    echo "filter by name";
+                }
+                else if (!strcmp($filt, "major")) {
+                    echo "filter by major";
+                }
+                else if (!strcmp($filt, "university")) {
+                    echo "filter by uni";
+                }
+                else if(!strcmp($filt, "date")) {
+                    echo "filter by date";
+                }
+                else {
+                    viewByTimeStamp();
+                }
+            }
+            else {
+                viewByTimeStamp();
+            }
         ?>
     </div>
 </div>
