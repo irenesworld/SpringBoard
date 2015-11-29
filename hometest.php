@@ -1,5 +1,4 @@
 <?php
-// hi kramer
 
 // $_POST: create an array (ex: array( key -> value, key2 -> value2, ...)
 // holds key/value pairs, where keys are the names of the form controls
@@ -66,7 +65,7 @@ if(isset($_POST['signin'])) {
         }
 
         if($loggedIn){
-            redirect('../springboard/profiletest.php');
+            redirect('../springboard/profiletest.php?loggedin=yes');
         }
     }
 }
@@ -110,7 +109,7 @@ if(isset($_POST['register']))
 
         if (!$nameError && !$emailError && !$pwdError && !$majorError && !$uniError) {
             createUser($name, $email, $password, $major, $universityID);
-            redirect('../springboard/profiletest.php');
+            redirect('../springboard/profiletest.php?loggedin=yes');
         }
     }
 }
@@ -134,6 +133,11 @@ function createUser($name, $email, $password, $major, $universityID){
 
     mysqli_stmt_close($statment);
     close();
+}
+
+$enabled = "disabled";
+if(isset($_SESSION)) {
+    $enabled = "enabled";
 }
 
 ?>
@@ -169,12 +173,12 @@ function createUser($name, $email, $password, $major, $universityID){
         </div>
         <div>
             <ul class="nav navbar-nav" >
-                <li class="active"><a href="hometest.php">Home</a></li>
-                <li><a href="aboutpage.html">About</a><li>
-                <li><a href="profiletest.php">Profile</a></li>
-                <li><a href="myresume.php">My Resumes</a></li>
-                <li><a href="reviewresumes.php">Review Resumes</a><li>
-                <li><a href="#">Resources</a></li>
+                <li class="active"><a href="hometest.php" id="homelink">Home</a></li>
+                <li><a href="aboutpage.html" id="aboutlink" class="disabled">About</a><li>
+                <li class="<?php echo $enabled ?>"><a href="profiletest.php" id="profilelink">Profile</a></li>
+                <li class="<?php echo $enabled ?>"><a href="myresume.php" id="myresumelink">My Resumes</a></li>
+                <li class="<?php echo $enabled ?>"><a href="reviewresumes.php" id="reviewresumelink">Review Resumes</a><li>
+                <li class="<?php echo $enabled ?>"><a href="#">Resources</a></li>
             </ul>
         </div>
     </div>
@@ -289,6 +293,7 @@ img1 = document.getElementById("img1");
             count = 1;
         img1.src = "images/" + imgs[count - 1];
     }
+
 </script>
 
 </body>
