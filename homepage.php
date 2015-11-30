@@ -126,7 +126,7 @@ if(isset($_SESSION['userEmail'])) {
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>About</title>
+    <title>SpringBoard</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
@@ -233,12 +233,12 @@ if(isset($_SESSION['userEmail'])) {
         </div>
         <div>
             <ul class="nav navbar-nav" >
-                <li class="active"><button type="button" class="btn btn-link" onclick="location.href='homepage.php';">Home</button></li>
-                <li><button type="button" class="btn btn-link" onclick="location.href='about.php';">About</button></li>
-                <li><button type="button" class="btn btn-link" onclick="location.href='profilepage.php';" <?php echo $enabled ?>>Profile</button></li>
-                <li><button type="button" class="btn btn-link" onclick="location.href='myresume.php';" <?php echo $enabled ?>>My Resumes</button></li>
-                <li><button type="button" class="btn btn-link" onclick="location.href='reviewresume.php';" <?php echo $enabled ?>>Review Resumes</button></li>
-                <li><button type="button" class="btn btn-link" onclick="location.href='resources.php';" <?php echo $enabled ?>>Resources</button></li>
+                <li class="active"><a href="homepage.php">Home</a></li>
+                <li><a href="aboutpage.html">About</a><li>
+                <li class="<?php echo $enabled ?>"><a href="profilepage.php">Profile</a></li>
+                <li class="<?php echo $enabled ?>"><a href="myresumes.php">My Resumes</a></li>
+                <li class="<?php echo $enabled ?>"><a href="reviewresumes.php">Review Resumes</a><li>
+                <li class="<?php echo $enabled ?>"><a href="#">Resources</a></li>
             </ul>
         </div>
     </div>
