@@ -198,15 +198,6 @@ if(isset($_SESSION['userEmail'])) {
             box-shadow: none;
         }
 
-       /* @import url(http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css);
-        .navbar-default {
-            background-color:teal;
-            background-image: none;
-            background-repeat: no-repeat;
-        }
-        .navbar-default > li > a {
-            color: blue;
-        }*/
     </style>
 </head>
 
@@ -224,7 +215,7 @@ if(isset($_SESSION['userEmail'])) {
                 <li class="active"><a href="homepage.php">Home</a></li>
                 <li><a href="aboutpage.html">About</a><li>
                 <li class="<?php echo $enabled ?>"><a href="profilepage.php">Profile</a></li>
-                <li class="<?php echo $enabled ?>"><a href="myresumes.php">My Resumes</a></li>
+                <li class="<?php echo $enabled ?>"><a href="myresume.php">My Resumes</a></li>
                 <li class="<?php echo $enabled ?>"><a href="reviewresumes.php">Review Resumes</a><li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
