@@ -1,9 +1,12 @@
 <?php
 
 require_once 'connect.php';
+require_once 'login.php';
 
-
-session_start();
+if(!(isLoggedIn())){
+    redirect("../springboard/homepage.php");
+    return;
+}
 
 $pictureURL = "";
 $name = "";

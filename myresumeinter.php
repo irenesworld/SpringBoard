@@ -4,8 +4,7 @@
 
 require_once 'connect.php';
 
-$membership = new Membership();
-if(!($membership->isLoggedIn())){
+if(!(isLoggedIn())){
     redirect("../springboard/homepage.php");
     return;
 }
