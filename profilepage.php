@@ -93,20 +93,29 @@ if(isset($_POST['changePass'])) {
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Bootstrap Example</title>
+    <title>Profile</title>
     <meta charset="utf-8">
+    <link rel="icon" type="image/png" href="images/favicon-32x32.png">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="styling.css">
     <style>
-
+        .body {
+            color: #38baf2;
+        }
         img.img-circle {
-            border: 2px;
+            border-radius: 5px;
+            border-style: solid;
             border-color: white;
+            border-width: 2px;
+            box-shadow: 2px 2px 2px #888888;
         }
         div.border {
             text-align: center;
             border-radius: 5px;
-            background-color: #99CCFF;
+            background-color: transparent;
+            border-style: solid;
+            border-color: #38baf2;
             margin-top: 10px;
             padding: 15px;
             margin-right: 5px;
@@ -118,53 +127,39 @@ if(isset($_POST['changePass'])) {
     </style>
 </head>
 <body>
-
-<div class="header">
-    <table align="center" width=100%>
-        <tr> <!-- ROW -->
-            <td> <!-- COLUMN -->
-                <img src="images/finallogo.png" width="300px" style="padding:5px"/>
-                <br>
-            </td>
-            <td>
-                <br>
-                <p align="right"><a href="logout.php">Sign out</a>&nbsp;</p>
-            </td>
-        </tr>
-    </table>
+<div class="custom-navbar">
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <img src="images/finallogo.png" width="250px">
+            </div>
+            <div>
+                <ul class="nav navbar-nav" >
+                    <li>&nbsp;&nbsp;&nbsp;</li>
+                    <li><a href="homepage.php">Home</a></li>
+                    <li><a href="aboutpage.html">About</a><li>
+                    <li class="active"><a href="profilepage.php">Profile</a></li>
+                    <li><a href="myresume.php">My Resumes</a></li>
+                    <li><a href="reviewresumes.php">Review Resumes</a><li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="logout.php">Sign out</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
 </div>
-
 <!-- AJAX is Asynchronous JavaScript and XML
 // loading data in the background and display it
 // on the web page without reloading the whole page -->
-
-<nav class="navbar navbar-inverse">
-    <div class="container-fluid">
-        <div class="navbar-header">
-        </div>
-        <div>
-            <ul class="nav navbar-nav" >
-                <li><a href="homepage.php">Home</a></li>
-                <li><a href="aboutpage.html">About</a><li>
-                <li class="active"><a href="profilepage.php">Profile</a></li>
-                <li><a href="myresume.php">My Resumes</a></li>
-                <li><a href="reviewresumepage.php">Review Resumes</a><li>
-                <li><a href="#">Resources</a></li>
-            </ul>
-        </div>
-    </div>
-</nav>
-
-
 <div class="container">
-    <h1>Profile</h1>
 
     <div class="row">
         <div class="col-md-3">
             <div class="border">
                 <p> </p>
                 <div class="centered">
-                    <img src="<?php echo $pictureURL ?>" id="profpic" alt="Irene Lau" width="100" >
+                    <img src="<?php echo $pictureURL ?>" id="profpic" class="img-circle" alt="Irene Lau" width="200" >
                 </div>
                 <br>
                 <a href="#"> <div id="pickbutton">
@@ -179,7 +174,9 @@ if(isset($_POST['changePass'])) {
         </div>
         <div class="col-md-1"></div>
         <div class="col-md-8">
-            <br><br>
+            <br>
+            <h3 style="color:#38baf2;">Profile</h3>
+            <br>
             <table class="profile" width=60%>
                 <tr>
                     <td> <p><b>Name: </b></p> </td>

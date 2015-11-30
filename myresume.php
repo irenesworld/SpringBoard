@@ -111,7 +111,7 @@ function addResume($name, $url){
                     <li><a href="reviewresumes.php">Review Resumes</a><li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#bottom">Sign in / Register</a></li>
+                    <li><a href="logout.php">Sign out</a></li>
                 </ul>
             </div>
         </div>
