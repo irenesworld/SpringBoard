@@ -148,7 +148,7 @@ if(isset($_POST['changePass'])) {
                 <li><a href="aboutpage.html">About</a><li>
                 <li class="active"><a href="profilepage.php">Profile</a></li>
                 <li><a href="myresume.php">My Resumes</a></li>
-                <li><a href="reviewresumepage.html">Review Resumes</a><li>
+                <li><a href="reviewresumepage.php">Review Resumes</a><li>
                 <li><a href="#">Resources</a></li>
             </ul>
         </div>
