@@ -5,15 +5,12 @@
 require_once 'connect.php';
 require_once 'login.php';
 
-$membership = new Membership();
-if(!($membership->isLoggedIn())){
+if(!(isLoggedIn())){
     redirect("../springboard/homepage.php");
     return;
 }
 
-
 $resumeArray = array();
-
 
 function addCommentToResume($resumeID, $commentStr){
     connect();
@@ -88,14 +85,15 @@ function addCommentToComment($resumeID, $commentID, $commentStr){
     close();
 }
 
-function getAllCommentsAndVotes($resumeID){
+function getAllCommentsAndVotes($resumeID)
+{
     connect();
     global $conn;
     $query = "SELECT * from comment where resume_id = ? order by (case when parent_id is null then 1 else 0 end) desc, parent_id desc";
 
     $statment = mysqli_prepare($conn, $query);
-    if ( !$statment ) {
-        die('mysqli error: '.mysqli_error($conn));
+    if (!$statment) {
+        die('mysqli error: ' . mysqli_error($conn));
     }
 
     mysqli_stmt_bind_param($statment, 'i', $resumeID);
@@ -112,17 +110,18 @@ function getAllCommentsAndVotes($resumeID){
         $resumeArray[] = array($idcomment, $authorID, $ts, $commentString, $parent_ID, $ts, $commentString);
     }
 
-    if(!empty($resumeArray)) {
+    if (!empty($resumeArray)) {
         foreach ($resumeArray as &$row2) {
-            if(!$row2[4]){//parent is null
+            if (!$row2[4]) {//parent is null
 
-            }else{
+            } else {
 
             }
         }
-    }else{
-            echo 'There are currently 0 reumes on the site.';
+    } else {
+        echo 'There are currently 0 reumes on the site.';
     }
+}
 
 ?>
 
@@ -308,4 +307,3 @@ function getAllCommentsAndVotes($resumeID){
 
 </body>
 </html>
-

@@ -10,6 +10,11 @@ require_once 'login.php';
 $resumeArray = array();
 //viewByTimeStamp();
 
+if(!(isLoggedIn())){
+    redirect("../springboard/homepage.php");
+    return;
+}
+
 function viewByTimeStamp(){
     connect();
     global $conn;

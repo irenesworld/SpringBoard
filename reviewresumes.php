@@ -11,8 +11,7 @@ require_once 'login.php';
 $resumeArray = array();
 //viewByTimeStamp();
 
-$membership = new Membership();
-if(!($membership->isLoggedIn())){
+if(!(isLoggedIn())){
     redirect("../springboard/homepage.php");
     return;
 }

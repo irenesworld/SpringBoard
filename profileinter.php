@@ -2,7 +2,14 @@
 <?php
 
 require_once 'connect.php';
+
+
+if(!(isLoggedIn())){
+    redirect("../springboard/homepage.php");
+    return;
+}
 session_start();
+
 
 connect();
 global $conn;
