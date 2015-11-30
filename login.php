@@ -11,6 +11,12 @@ function login($email, $password){
     return $response; // true or false
 }
 
+function isLoggedIn(){
+    global $membership;
+    $response = $membership->isLoggedIn();
+    return $response; // true or false
+}
+
 function signout() {
     echo 'signing out';
     global $membership;
