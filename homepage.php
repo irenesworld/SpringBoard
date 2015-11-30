@@ -236,7 +236,7 @@ if(isset($_SESSION['userEmail'])) {
                 <li class="active"><a href="homepage.php">Home</a></li>
                 <li><a href="aboutpage.html">About</a><li>
                 <li class="<?php echo $enabled ?>"><a href="profilepage.php">Profile</a></li>
-                <li class="<?php echo $enabled ?>"><a href="#">My Resumes</a></li>
+                <li class="<?php echo $enabled ?>"><a href="myresumes.php">My Resumes</a></li>
                 <li class="<?php echo $enabled ?>"><a href="reviewresumes.php">Review Resumes</a><li>
                 <li class="<?php echo $enabled ?>"><a href="#">Resources</a></li>
             </ul>
