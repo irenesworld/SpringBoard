@@ -49,9 +49,13 @@ class Membership
     }
 
     function isLoggedIn(){
-        session_start();
+
         if($_SESSION['status'] != 'authorized'){
             return false;
+        }
+        if(session_id() == '' || !isset($_SESSION)) {
+            // session isn't started
+            session_start();
         }
         return true;
     }
