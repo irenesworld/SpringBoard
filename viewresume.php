@@ -12,10 +12,11 @@ if(!(isLoggedIn())){
 
 $resumeArray = array();
 
+//addCommentToResume(15, "Test comment. Do not upvote");
 function addCommentToResume($resumeID, $commentStr){
     connect();
     global $conn;
-    $query = "insert into comment (author_id, resume_id, commentString) values(?,?,?); SELECT LAST_INSERT_ID();";
+    $query = "insert into comment (author_id, resume_id, commentString) values(?,?,?);";
     $statment = mysqli_prepare($conn, $query);
     if ( !$statment ) {
         die('mysqli error: '.mysqli_error($conn));
@@ -24,8 +25,7 @@ function addCommentToResume($resumeID, $commentStr){
     mysqli_stmt_bind_param($statment, 'iis', $_SESSION['userid'], $resumeID, $commentStr);
     mysqli_stmt_execute($statment);
 
-    $newCommentID = "";
-    mysqli_stmt_bind_result($statment, $newCommentID);
+    $newCommentID = mysqli_stmt_insert_id($statment);
 
     mysqli_stmt_close($statment);
 
@@ -41,14 +41,12 @@ function addCommentToResume($resumeID, $commentStr){
     mysqli_stmt_bind_param($statment2, 'iii', $_SESSION['userid'], $newCommentID, $positiveVote);
     mysqli_stmt_execute($statment2);
 
-    $result2 = "";
-    mysqli_stmt_bind_result($statment2, $result2);
-
     mysqli_stmt_close($statment2);
 
     close();
 }
 
+/*
 function addCommentToComment($resumeID, $commentID, $commentStr){
     connect();
     global $conn;
@@ -84,12 +82,15 @@ function addCommentToComment($resumeID, $commentID, $commentStr){
 
     close();
 }
+*/
+
+getAllCommentsAndVotes(15);
 
 function getAllCommentsAndVotes($resumeID)
 {
     connect();
     global $conn;
-    $query = "SELECT * from comment where resume_id = ? order by (case when parent_id is null then 1 else 0 end) desc, parent_id desc";
+    $query = "SELECT idcomment, author_id, parent_id, ts, commentString, iduser, userName, major, pictureURL, name from comment, user, university where resume_id = ? and author_id = iduser order by ts";
 
     $statment = mysqli_prepare($conn, $query);
     if (!$statment) {
@@ -104,23 +105,64 @@ function getAllCommentsAndVotes($resumeID)
     $parent_ID = "";
     $ts = "";
     $commentString = "";
-    mysqli_stmt_bind_result($statment, $idcomment, $authorID, $resumeID, $parent_ID, $ts, $commentString);
+    $iduser = "";
+    $major = "";
+    $pictureURL = "";
+    $universityName = "";
 
-    while ($row = mysqli_stmt_fetch($statment)) {
-        $resumeArray[] = array($idcomment, $authorID, $ts, $commentString, $parent_ID, $ts, $commentString);
+    mysqli_stmt_bind_result($statment, $idcomment, $authorID, $resumeID, $parent_ID, $ts, $commentString, $iduser, $major, $pictureURL, $universityName);
+
+    while (mysqli_stmt_fetch($statment)) {
+        $resumeArray[] = array($idcomment, $authorID, $ts, $commentString, $parent_ID, $ts, $commentString, $commentString, $iduser, $major, $pictureURL, $universityName);
     }
+    mysqli_stmt_close($statment);
 
-    if (!empty($resumeArray)) {
-        foreach ($resumeArray as &$row2) {
-            if (!$row2[4]) {//parent is null
-
-            } else {
-
+    if(!empty($resumeArray)) {
+        foreach ($resumeArray as &$row) {
+            $query2 = "select * from vote where idc = ?";
+            $statment2 = mysqli_prepare($conn, $query2);
+            if (!$statment2) {
+                die('mysqli error: ' . mysqli_error($conn));
             }
+
+            mysqli_stmt_bind_param($statment2, 'i', $row[0]);
+            mysqli_stmt_execute($statment2);
+
+            $idc = "";
+            $idu = "";
+            $postive = "";
+            mysqli_stmt_bind_result($statment2, $idc, $idu, $postive);
+
+            while (mysqli_stmt_fetch($statment2)) {
+                $voteArray[] = array($idc, $idu, $postive);
+            }
+            mysqli_stmt_close($statment2);
+
+            $totalUpVote = 0;
+            $totalDownVote = 0;
+
+            foreach ($voteArray as $vote) {
+                if ($vote[2] == 1) {
+                    $totalUpVote++;
+                } else {
+                    $totalDownVote++;
+                }
+            }
+
+            $totalVotes = $totalUpVote - $totalDownVote;
+
+            array_push($row, $totalVotes);
+
+            echo " \n: ";
+            foreach($row as $thing){
+                echo " ". $thing . " ";
+            }
+
         }
-    } else {
-        echo 'There are currently 0 reumes on the site.';
+    }else{
+        echo 'There are no commments to display';
     }
+
 }
 
 ?>
