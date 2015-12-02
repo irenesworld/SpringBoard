@@ -19,7 +19,7 @@ if(!(isLoggedIn())){
 function viewByTimeStamp(){
     connect();
     global $conn;
-    $query = "SELECT ts, user.username, user.major, user.universityID, resume.name, resumeURL from user, resume where iduser = user_id order by ts DESC";
+    $query = "SELECT ts, user.username, user.major, user.universityID, idresume, resume.name, resumeURL from user, resume where iduser = user_id order by ts DESC";
     $statment = mysqli_prepare($conn, $query);
     if ( !$statment ) {
         die('mysqli error: '.mysqli_error($conn));
@@ -31,16 +31,17 @@ function viewByTimeStamp(){
     $userName = "";
     $userMajor = "";
     $fileName = "";
+    $idresume = "";
     $resumeURL = "";
     $userUni = "";
-    mysqli_stmt_bind_result($statment, $timeStamp, $userName, $userMajor, $userUni, $fileName, $resumeURL);
+    mysqli_stmt_bind_result($statment, $timeStamp, $userName, $userMajor, $userUni, $idresume,  $fileName, $resumeURL);
 
     while ($row = mysqli_stmt_fetch($statment)) {
-        $resumeArray[] = array($timeStamp, $userName, $userMajor, $userUni, $fileName, $resumeURL);
+        $resumeArray[] = array($timeStamp, $userName, $userMajor, $userUni, $idresume, $fileName, $resumeURL);
     }
     // maybe change table
     foreach($resumeArray as &$row2) {
-        echo "<a href='viewresume.php?resumeURL=" . $row2[5] . "' class='list-group-item'>";
+        echo "<a href='viewresume.php?idresume=". $row2[4]. "&resumeURL=" . $row2[6] . "' class='list-group-item'>";
         echo "<div class='row'>";
         echo "<div class='col-md-3'>";
         echo $row2[0] . "</div>";
@@ -62,7 +63,7 @@ function viewByTimeStamp(){
 function viewByName() {
     connect();
     global $conn;
-    $query = "SELECT ts, user.username, user.major, user.universityID, resume.name, resumeURL from user, resume where iduser = user_id order by user.username";
+    $query = "SELECT ts, user.username, user.major, user.universityID, idresume, resume.name, resumeURL from user, resume where iduser = user_id order by user.username";
     $statment = mysqli_prepare($conn, $query);
     if ( !$statment ) {
         die('mysqli error: '.mysqli_error($conn));
@@ -74,16 +75,17 @@ function viewByName() {
     $userName = "";
     $userMajor = "";
     $fileName = "";
+    $idresume = "";
     $resumeURL = "";
     $userUni = "";
-    mysqli_stmt_bind_result($statment, $timeStamp, $userName, $userMajor, $userUni, $fileName, $resumeURL);
+    mysqli_stmt_bind_result($statment, $timeStamp, $userName, $userMajor, $userUni, $idresume, $fileName, $resumeURL);
 
     while ($row = mysqli_stmt_fetch($statment)) {
-        $resumeArray[] = array($timeStamp, $userName, $userMajor, $userUni, $fileName, $resumeURL);
+        $resumeArray[] = array($timeStamp, $userName, $userMajor, $userUni, $idresume, $fileName, $resumeURL);
     }
     // maybe change table
     foreach($resumeArray as &$row2) {
-        echo "<a href='viewresume.php?resumeURL=" . $row2[5] . "' class='list-group-item'>";
+        echo "<a href='viewresume.php?idresume=". $row2[4]. "&resumeURL=" . $row2[6] .  "' class='list-group-item'>";
         echo "<div class='row'>";
         echo "<div class='col-md-3'>";
         echo $row2[0] . "</div>";
@@ -105,7 +107,7 @@ function viewByName() {
 function viewByMajor(){
     connect();
     global $conn;
-    $query = "SELECT ts, user.username, user.major, user.universityID, resume.name, resumeURL from user, resume where user_id = iduser order by user.major";
+    $query = "SELECT ts, user.username, user.major, user.universityID, idresume, resume.name, resumeURL from user, resume where user_id = iduser order by user.major";
     $statment = mysqli_prepare($conn, $query);
     if ( !$statment ) {
         die('mysqli error: '.mysqli_error($conn));
@@ -117,16 +119,17 @@ function viewByMajor(){
     $userName = "";
     $userMajor = "";
     $fileName = "";
+    $idresume = "";
     $resumeURL = "";
     $userUni = "";
-    mysqli_stmt_bind_result($statment, $timeStamp, $userName, $userMajor, $userUni, $fileName, $resumeURL);
+    mysqli_stmt_bind_result($statment, $timeStamp, $userName, $userMajor, $userUni, $idresume, $fileName, $resumeURL);
 
     while ($row = mysqli_stmt_fetch($statment)) {
-        $resumeArray[] = array($timeStamp, $userName, $userMajor, $userUni, $fileName, $resumeURL);
+        $resumeArray[] = array($timeStamp, $userName, $userMajor, $userUni, $idresume, $fileName, $resumeURL);
     }
     // maybe change table
     foreach($resumeArray as &$row2) {
-        echo "<a href='viewresume.php?resumeURL=" . $row2[5] . "'class='list-group-item'>";
+        echo "<a href='viewresume.php?idresume=". $row2[4]. "&resumeURL=" . $row2[6] . "'class='list-group-item'>";
         echo "<div class='row'>";
         echo "<div class='col-md-3'>";
         echo $row2[0] . "</div>";

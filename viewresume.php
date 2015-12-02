@@ -2,6 +2,10 @@
 // hi kramer
 //hi irene
 
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 require_once 'connect.php';
 require_once 'login.php';
 
@@ -84,20 +88,25 @@ function addCommentToComment($resumeID, $commentID, $commentStr){
 }
 */
 
-getAllCommentsAndVotes(15);
-
-function getAllCommentsAndVotes($resumeID)
+getAllCommentsAndVotes();
+function getAllCommentsAndVotes()
 {
     connect();
     global $conn;
-    $query = "SELECT idcomment, author_id, parent_id, ts, commentString, iduser, userName, major, pictureURL, name from comment, user, university where resume_id = ? and author_id = iduser order by ts";
+
+    $query = "SELECT idcomment, author_id, comment.ts, commentString, iduser, userName, major, pictureURL, university.name from comment, user, university, resume where idresume = ? and author_id = iduser and universityID = iduniversity and idresume = resume_id order by ts";
 
     $statment = mysqli_prepare($conn, $query);
     if (!$statment) {
         die('mysqli error: ' . mysqli_error($conn));
     }
 
-    mysqli_stmt_bind_param($statment, 'i', $resumeID);
+    $idresume = "";
+    if(isset($_GET['idresume'])) {
+        $idresume = htmlspecialchars($_GET['idresume']);
+    }
+
+    mysqli_stmt_bind_param($statment, 'i', $idresume);
     mysqli_stmt_execute($statment);
 
     $idcomment = "";
@@ -106,26 +115,30 @@ function getAllCommentsAndVotes($resumeID)
     $ts = "";
     $commentString = "";
     $iduser = "";
+    $userName = "";
     $major = "";
     $pictureURL = "";
     $universityName = "";
 
-    mysqli_stmt_bind_result($statment, $idcomment, $authorID, $resumeID, $parent_ID, $ts, $commentString, $iduser, $major, $pictureURL, $universityName);
+    mysqli_stmt_bind_result($statment, $idcomment, $authorID, $ts, $commentString, $iduser, $userName, $major, $pictureURL, $universityName);
 
     while (mysqli_stmt_fetch($statment)) {
-        $resumeArray[] = array($idcomment, $authorID, $ts, $commentString, $parent_ID, $ts, $commentString, $commentString, $iduser, $major, $pictureURL, $universityName);
+        $resumeArray[] = array($idcomment, $authorID, $ts, $commentString, $iduser, $userName, $major, $pictureURL, $universityName);
     }
+
     mysqli_stmt_close($statment);
+
 
     if(!empty($resumeArray)) {
         foreach ($resumeArray as &$row) {
             $query2 = "select * from vote where idc = ?";
+
             $statment2 = mysqli_prepare($conn, $query2);
             if (!$statment2) {
                 die('mysqli error: ' . mysqli_error($conn));
             }
 
-            mysqli_stmt_bind_param($statment2, 'i', $row[0]);
+            mysqli_stmt_bind_param($statment2, 'i', $row[1]);
             mysqli_stmt_execute($statment2);
 
             $idc = "";
@@ -138,27 +151,28 @@ function getAllCommentsAndVotes($resumeID)
             }
             mysqli_stmt_close($statment2);
 
-            $totalUpVote = 0;
-            $totalDownVote = 0;
+            if(!empty($voteArray)) {
+                $totalUpVote = 0;
+                $totalDownVote = 0;
 
-            foreach ($voteArray as $vote) {
-                if ($vote[2] == 1) {
-                    $totalUpVote++;
-                } else {
-                    $totalDownVote++;
+                foreach ($voteArray as &$vote) {
+                    if ($vote[2] == 1) {
+                        $totalUpVote++;
+                    } else {
+                        $totalDownVote++;
+                    }
                 }
+                unset($vote);
+
+                $totalVotes = $totalUpVote - $totalDownVote;
+            }else{
+                $totalVotes = 0;
             }
-
-            $totalVotes = $totalUpVote - $totalDownVote;
-
             array_push($row, $totalVotes);
-
-            echo " \n: ";
-            foreach($row as $thing){
-                echo " ". $thing . " ";
-            }
-
         }
+        unset($row);
+       // echo "<br> Resume: ".end($resumeArray)[0]." ".end($resumeArray)[1]." ".end($resumeArray)[2]." ".end($resumeArray)[3]." ".end($resumeArray)[4]." ".end($resumeArray)[5]." ".end($resumeArray)[6]." ".end($resumeArray)[7]." ".end($resumeArray)[8]." ".end($resumeArray)[9]. "<br>";
+
     }else{
         echo 'There are no commments to display';
     }
