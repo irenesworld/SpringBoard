@@ -88,7 +88,7 @@ function addCommentToComment($resumeID, $commentID, $commentStr){
 }
 */
 
-getAllCommentsAndVotes();
+//getAllCommentsAndVotes();
 function getAllCommentsAndVotes()
 {
     connect();
@@ -173,6 +173,31 @@ function getAllCommentsAndVotes()
         unset($row);
        // echo "<br> Resume: ".end($resumeArray)[0]." ".end($resumeArray)[1]." ".end($resumeArray)[2]." ".end($resumeArray)[3]." ".end($resumeArray)[4]." ".end($resumeArray)[5]." ".end($resumeArray)[6]." ".end($resumeArray)[7]." ".end($resumeArray)[8]." ".end($resumeArray)[9]. "<br>";
 
+        foreach($resumeArray as &$crow){
+            echo '<div class="row">
+        <div class="col-sm-2">
+            <div class="thumbnail">
+                <img class="img-responsive user-photo" src='.$crow[7].'>
+            </div>
+        </div>
+        <div class="col-sm-10">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                        <strong>'.$crow[5].'&nbsp;</strong>
+                        <span class="text-muted">&nbsp; '.$crow[2].'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                </div>
+                <div class="panel-body">
+                '.$crow[3].'
+    </div>
+                <div class="panel-footer" style="text-align:right">
+                    <span class="glyphicon glyphicon-chevron-up"></span>
+                    '.$crow[9].'
+                    <span class="glyphicon glyphicon-chevron-down"></span>
+                </div>
+            </div>
+        </div>
+    </div>';
+        }
     }else{
         echo 'There are no commments to display';
     }
@@ -288,6 +313,7 @@ function getAllCommentsAndVotes()
     </div>
 
     <div class="row">
+        <?php getAllCommentsAndVotes() ?>
         <div class="col-sm-2">
             <div class="thumbnail">
                 <img class="img-responsive user-photo" src="https://www.filepicker.io/api/file/f107zsqaRgC9YQg3gYlG/convert?crop=0,280,718,718">
