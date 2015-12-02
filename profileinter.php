@@ -112,7 +112,7 @@ if(isset($_GET['changepic'])) {
     }
 }
 
-function redirect($url)
+/*function redirect($url)
 {
     if (!headers_sent())
     {
@@ -128,6 +128,6 @@ function redirect($url)
         echo '<meta http-equiv="refresh" content="0;url='.$url.'" />';
         echo '</noscript>'; exit;
     }
-}
+}*/
 
 ?>

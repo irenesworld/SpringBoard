@@ -1,0 +1,64 @@
+.bg {
+    background-color: white;
+}
+body {
+    font-family: 'Lato', sans-serif;
+    font-color: #a6a6a6;
+}
+
+.container {
+
+}
+
+.header {
+    background-color: white;
+}
+
+.custom-navbar > .navbar-default {
+    background: white !important;
+    border-color: transparent !important;
+    list-style: none;
+    padding-left:10px;
+    padding-top:20px;
+}
+
+.custom-navbar .navbar-nav {
+}
+
+.custom-navbar .navbar-nav > li {
+    padding-top: 6px;
+}
+
+.custom-navbar .navbar-nav > li > a {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.form-group > label {
+    font-weight: 300;
+}
+
+.btn {
+    padding: 10px 10px;
+    border: 0 none;
+    letter-spacing: 1px;
+    border-radius: 0;
+}
+
+.btn:focus, .btn:active:focus, .btn.active:focus {
+    outline: 0 none;
+}
+
+.btn-primary {
+    background: #F25F5C;
+    color: #ffffff;
+}
+
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open > .dropdown-toggle.btn-primary {
+    background: rgba(242, 95, 92, 0.64);
+}
+
+.btn-primary:active, .btn-primary.active {
+    background: rgba(242, 95, 92, 0.55);
+    box-shadow: none;
+}

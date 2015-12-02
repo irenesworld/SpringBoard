@@ -79,57 +79,49 @@ function addResume($name, $url){
 <head>
     <title>About</title>
     <meta charset="utf-8">
+    <link rel="icon" type="image/png" href="images/favicon-32x32.png">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 
-   <style>
-       /*@media (min-width: 1000px) {
-           .container{
-               max-width: 800px;
-           }
-       }*/
-   </style>
+    <link rel="stylesheet" type="text/css" href="styling.css">
+
+    <style>
+        .list-group .list-group-item > a {
+
+        }
+    </style>
 
 </head>
 
-<body>
-
-<div class="header">
-    <table align="center" width=100%>
-        <tr> <!-- ROW -->
-            <td> <!-- COLUMN -->
-                <img src="images/finallogo.png" width="300px" style="padding:5px"/>
-                <br>
-            </td>
-            <td>
-                <br>
-                <p align="right"><a href="logout.php">Sign out</a>&nbsp;</p>
-            </td>
-        </tr>
-    </table>
+<div class="custom-navbar">
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <img src="images/finallogo.png" width="250px">
+            </div>
+            <div>
+                <ul class="nav navbar-nav" >
+                    <li>&nbsp;&nbsp;&nbsp;</li>
+                    <li><a href="homepage.php">Home</a></li>
+                    <li><a href="aboutpage.html">About</a><li>
+                    <li><a href="profilepage.php">Profile</a></li>
+                    <li class="active"><a href="myresume.php">My Resumes</a></li>
+                    <li><a href="reviewresumes.php">Review Resumes</a><li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="logout.php">Sign out</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
 </div>
 
-<nav class="navbar navbar-inverse">
-    <div class="container-fluid">
-        <div class="navbar-header">
-        </div>
-        <div>
-            <ul class="nav navbar-nav" >
-                <li><a href="homepage.php">Home</a></li>
-                <li><a href="aboutpage.html">About</a><li>
-                <li><a href="profilepage.php">Profile</a></li>
-                <li class="active"><a href="#">My Resumes</a></li>
-                <li><a href="reviewresumes.php">Review Resumes</a><li>
-                <li><a href="#">Resources</a></li>
-            </ul>
-        </div>
-    </div>
-</nav>
+<body>
 
 <div class="container">
-    <button class="btn btn-default dropdown-toggle" type="button" id="uploadResume" name="uploadResume"
+    <button class="btn btn-primary dropdown-toggle" type="button" id="uploadResume" name="uploadResume"
             aria-haspopup="true" aria-expanded="true">
         <span class="glyphicon glyphicon-cloud-upload"></span>
         &nbsp; Upload Resume

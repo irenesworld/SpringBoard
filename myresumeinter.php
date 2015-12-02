@@ -3,6 +3,7 @@
 // it will add resume to database
 
 require_once 'connect.php';
+require_once 'login.php';
 
 if(!(isLoggedIn())){
     redirect("../springboard/homepage.php");
@@ -39,7 +40,7 @@ if(isset($_GET['filename'])) {
 //header("Location: ../myresume.php");
 redirect("../myresume.php");
 
-function redirect($url)
+/*function redirect($url)
 {
     if (!headers_sent())
     {
@@ -55,6 +56,6 @@ function redirect($url)
         echo '<meta http-equiv="refresh" content="0;url='.$url.'" />';
         echo '</noscript>'; exit;
     }
-}
+}*/
 
 ?>

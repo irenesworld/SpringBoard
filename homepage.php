@@ -128,14 +128,13 @@ if(isset($_SESSION['userEmail'])) {
 <head>
     <title>SpringBoard</title>
     <meta charset="utf-8">
+    <link rel="icon" type="image/png" href="images/favicon-32x32.png">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-
     <link href='https://fonts.googleapis.com/css?family=Lato|Open+Sans:300' rel='stylesheet' type='text/css'>
-
     <style>
         .bg {
-
+            background-color: white;
         }
         body {
             font-family: 'Lato', sans-serif;
@@ -143,7 +142,7 @@ if(isset($_SESSION['userEmail'])) {
         }
 
         .container {
-            background-color: white;
+
         }
 
         .header {
@@ -155,17 +154,19 @@ if(isset($_SESSION['userEmail'])) {
             border-color: transparent !important;
             list-style: none;
             padding-left:10px;
+            padding-top:20px;
         }
 
         .custom-navbar .navbar-nav {
         }
 
         .custom-navbar .navbar-nav > li {
+            padding-top: 6px;
         }
 
         .custom-navbar .navbar-nav > li > a {
-            padding-top: 5px;
-            padding-bottom: 5px;
+            padding-top: 10px;
+            padding-bottom: 10px;
         }
 
         .form-group > label {
@@ -197,66 +198,49 @@ if(isset($_SESSION['userEmail'])) {
             box-shadow: none;
         }
 
-       /* @import url(http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css);
-        .navbar-default {
-            background-color:teal;
-            background-image: none;
-            background-repeat: no-repeat;
-        }
-        .navbar-default > li > a {
-            color: blue;
-        }*/
     </style>
 </head>
 
 <body>
 
-<div class="header">
-    <table align="center" width=100%>
-        <tr> <!-- ROW -->
-            <td> <!-- COLUMN -->
-                <img src="images/finallogo.png" width="300px" style="padding:5px"/>
-                <br>
-            </td>
-            <td>
-                <br>
-                <p align="right"><a href="#bottom">Log in</a>&nbsp;&nbsp;  |&nbsp;&nbsp;  <a href="#bottom">Sign up</a> &nbsp;</p>
-            </td>
-        </tr>
-    </table>
-</div>
-
 <div class="custom-navbar">
 <nav class="navbar navbar-default">
     <div class="container-fluid">
         <div class="navbar-header">
+            <img src="images/finallogo.png" width="250px">
         </div>
         <div>
             <ul class="nav navbar-nav" >
+                <li>&nbsp;&nbsp;&nbsp;</li>
                 <li class="active"><a href="homepage.php">Home</a></li>
                 <li><a href="aboutpage.html">About</a><li>
                 <li class="<?php echo $enabled ?>"><a href="profilepage.php">Profile</a></li>
-                <li class="<?php echo $enabled ?>"><a href="myresumes.php">My Resumes</a></li>
+                <li class="<?php echo $enabled ?>"><a href="myresume.php">My Resumes</a></li>
                 <li class="<?php echo $enabled ?>"><a href="reviewresumes.php">Review Resumes</a><li>
-                <li class="<?php echo $enabled ?>"><a href="#">Resources</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#bottom">Sign in / Register</a></li>
             </ul>
         </div>
     </div>
 </nav>
 </div>
 
-<div class="bg">
-<div class="container" style="text-align:center">
-    <img id = "img1" src="images/pic1.jpg" width="85%"/>
-    <br>
-    <br>
+<div class="row">
+    <div class="col-md-12">
+        <img id ="img1" src="images/pic1.jpg" width="100%">
+    </div>
 </div>
 
+<div class="bg">
 <div class="container">
+    <div class="row">
+        <br>
+    </div>
     <div class="row">
         <div class="col-md-1">
         </div>
-        <div class="col-md-5" style="padding-right:40px;">
+        <div class="col-md-5" style="padding:40px 40px;">
             <br>
             <a name="bottom"></a>
             <h3 class="text-center">Sign in</h3>
@@ -278,7 +262,7 @@ if(isset($_SESSION['userEmail'])) {
             </form>
         </div>
 
-        <div class="col-md-5" style="padding-left:40px; border-left: 1px solid #ccc;">
+        <div class="col-md-5" style="padding: 40px 40px; border-left: 1px solid #ccc;">
             <br>
             <h3 class="text-center">New User? Sign Up!</h3>
             <br>
@@ -324,6 +308,7 @@ if(isset($_SESSION['userEmail'])) {
 
 <br>
 <br>
+    <footer><p>C Irene Lau, Daniel Kramer</p></footer>
 </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
