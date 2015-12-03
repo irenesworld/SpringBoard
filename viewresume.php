@@ -142,7 +142,7 @@ function getAllCommentsAndVotes()
                     die('mysqli error: ' . mysqli_error($conn));
                 }
 
-                mysqli_stmt_bind_param($statment2, 'i', $resumeArray[$i][1]);
+                mysqli_stmt_bind_param($statment2, 'i', $resumeArray[$i][0]);
                 mysqli_stmt_execute($statment2);
 
                 $idc = "";
@@ -328,29 +328,8 @@ function getAllCommentsAndVotes()
     <?php try{getAllCommentsAndVotes();}catch(Exception $e){echo $e->getMessage();} ?>
     <?php echo ' the next line in the html part '; ?>
 
-    <div class="row">
-        <div class="col-sm-2">
-            <div class="thumbnail">
-                <img class="img-responsive user-photo" src="https://www.filepicker.io/api/file/f107zsqaRgC9YQg3gYlG/convert?crop=0,280,718,718">
-            </div>
-        </div>
-        <div class="col-sm-10">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <strong>Irene Lau&nbsp;</strong>
-                    <span class="text-muted">&nbsp; Dec. 9, 2015&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                </div>
-                <div class="panel-body">
-                    Comment. Mac & Cheese. Pepperoni Pizza. This resume is awesomeeeeeeeee. Superb. Beautiful. Magnificant.
-                </div>
-                <div class="panel-footer" style="text-align:right">
-                    <span class="glyphicon glyphicon-chevron-up"></span>
-                    50
-                    <span class="glyphicon glyphicon-chevron-down"></span>
-                </div>
-            </div>
-        </div>
-    </div>
+    <?php echo ' after echo'; ?>
+
 
     <?php echo ' after the nect comment part why doesnt this print'; ?>
 
