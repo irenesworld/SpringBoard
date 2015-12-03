@@ -91,117 +91,131 @@ function addCommentToComment($resumeID, $commentID, $commentStr){
 //getAllCommentsAndVotes();
 function getAllCommentsAndVotes()
 {
-    connect();
-    global $conn;
+    try {
+        connect();
+        global $conn;
 
-    $query = "SELECT idcomment, author_id, comment.ts, commentString, iduser, userName, major, pictureURL, university.name from comment, user, university, resume where idresume = ? and author_id = iduser and universityID = iduniversity and idresume = resume_id order by ts";
+        $query = "SELECT idcomment, author_id, comment.ts, commentString, iduser, userName, major, pictureURL, university.name from comment, user, university, resume where idresume = ? and author_id = iduser and universityID = iduniversity and idresume = resume_id order by ts";
 
-    $statment = mysqli_prepare($conn, $query);
-    if (!$statment) {
-        die('mysqli error: ' . mysqli_error($conn));
-    }
+        $statment = mysqli_prepare($conn, $query);
+        if (!$statment) {
+            die('mysqli error: ' . mysqli_error($conn));
+        }
 
-    $idresume = "";
-    if(isset($_GET['idresume'])) {
-        $idresume = htmlspecialchars($_GET['idresume']);
-    }
+        $idresume = "";
+        if (isset($_GET['idresume'])) {
+            $idresume = htmlspecialchars($_GET['idresume']);
+        }
 
-    mysqli_stmt_bind_param($statment, 'i', $idresume);
-    mysqli_stmt_execute($statment);
+        mysqli_stmt_bind_param($statment, 'i', $idresume);
+        mysqli_stmt_execute($statment);
 
-    $idcomment = "";
-    $authorID = "";
-    $parent_ID = "";
-    $ts = "";
-    $commentString = "";
-    $iduser = "";
-    $userName = "";
-    $major = "";
-    $pictureURL = "";
-    $universityName = "";
+        $idcomment = "";
+        $authorID = "";
+        $parent_ID = "";
+        $ts = "";
+        $commentString = "";
+        $iduser = "";
+        $userName = "";
+        $major = "";
+        $pictureURL = "";
+        $universityName = "";
 
-    mysqli_stmt_bind_result($statment, $idcomment, $authorID, $ts, $commentString, $iduser, $userName, $major, $pictureURL, $universityName);
+        mysqli_stmt_bind_result($statment, $idcomment, $authorID, $ts, $commentString, $iduser, $userName, $major, $pictureURL, $universityName);
 
-    while (mysqli_stmt_fetch($statment)) {
-        $resumeArray[] = array($idcomment, $authorID, $ts, $commentString, $iduser, $userName, $major, $pictureURL, $universityName);
-    }
+        $rCounter = 0;
+        while (mysqli_stmt_fetch($statment)) {
+            $resumeArray[$rCounter] = array($idcomment, $authorID, $ts, $commentString, $iduser, $userName, $major, $pictureURL, $universityName);
+            $rCounter++;
+        }
 
-    mysqli_stmt_close($statment);
+        mysqli_stmt_close($statment);
 
 
-    if(!empty($resumeArray)) {
-        foreach ($resumeArray as &$row) {
-            $query2 = "select * from vote where idc = ?";
+        if (!empty($resumeArray)) {
+            for ($i = 0; $i < $rCounter; $i++) {
+                $query2 = "select * from vote where idc = ?";
 
-            $statment2 = mysqli_prepare($conn, $query2);
-            if (!$statment2) {
-                die('mysqli error: ' . mysqli_error($conn));
-            }
 
-            mysqli_stmt_bind_param($statment2, 'i', $row[1]);
-            mysqli_stmt_execute($statment2);
-
-            $idc = "";
-            $idu = "";
-            $postive = "";
-            mysqli_stmt_bind_result($statment2, $idc, $idu, $postive);
-
-            while (mysqli_stmt_fetch($statment2)) {
-                $voteArray[] = array($idc, $idu, $postive);
-            }
-            mysqli_stmt_close($statment2);
-
-            if(!empty($voteArray)) {
-                $totalUpVote = 0;
-                $totalDownVote = 0;
-
-                foreach ($voteArray as &$vote) {
-                    if ($vote[2] == 1) {
-                        $totalUpVote++;
-                    } else {
-                        $totalDownVote++;
-                    }
+                $statment2 = mysqli_prepare($conn, $query2);
+                if (!$statment2) {
+                    die('mysqli error: ' . mysqli_error($conn));
                 }
-                unset($vote);
 
-                $totalVotes = $totalUpVote - $totalDownVote;
-            }else{
-                $totalVotes = 0;
+                mysqli_stmt_bind_param($statment2, 'i', $resumeArray[$i][1]);
+                mysqli_stmt_execute($statment2);
+
+                $idc = "";
+                $idu = "";
+                $postive = "";
+                mysqli_stmt_bind_result($statment2, $idc, $idu, $postive);
+
+                $vCounter = 0;
+                while (mysqli_stmt_fetch($statment2)) {
+                    $voteArray[$vCounter] = array($idc, $idu, $postive);
+                    $vCounter++;
+                }
+                mysqli_stmt_close($statment2);
+
+                if (!empty($voteArray)) {
+                    $totalUpVote = 0;
+                    $totalDownVote = 0;
+
+                    for ($j = 0; $j < $vCounter; $j++) {
+                        if ($voteArray[$j][2] == 1) {
+                            $totalUpVote++;
+                        } else {
+                            $totalDownVote++;
+                        }
+                    }
+
+                    $totalVotes = $totalUpVote - $totalDownVote;
+                } else {
+                    $totalVotes = 0;
+                }
+                array_push($resumeArray[$i], $totalVotes);
             }
-            array_push($row, $totalVotes);
-        }
-        unset($row);
-       // echo "<br> Resume: ".end($resumeArray)[0]." ".end($resumeArray)[1]." ".end($resumeArray)[2]." ".end($resumeArray)[3]." ".end($resumeArray)[4]." ".end($resumeArray)[5]." ".end($resumeArray)[6]." ".end($resumeArray)[7]." ".end($resumeArray)[8]." ".end($resumeArray)[9]. "<br>";
 
-        foreach($resumeArray as &$crow){
-            echo '<div class="row">
-        <div class="col-sm-2">
-            <div class="thumbnail">
-                <img class="img-responsive user-photo" src='.$crow[7].'>
-            </div>
-        </div>
-        <div class="col-sm-10">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                        <strong>'.$crow[5].'&nbsp;</strong>
-                        <span class="text-muted">&nbsp; '.$crow[2].'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                </div>
-                <div class="panel-body">
-                '.$crow[3].'
-    </div>
-                <div class="panel-footer" style="text-align:right">
-                    <span class="glyphicon glyphicon-chevron-up"></span>
-                    '.$crow[9].'
-                    <span class="glyphicon glyphicon-chevron-down"></span>
-                </div>
-            </div>
-        </div>
-    </div>';
+            // echo "<br> Resume: ".end($resumeArray)[0]." ".end($resumeArray)[1]." ".end($resumeArray)[2]." ".end($resumeArray)[3]." ".end($resumeArray)[4]." ".end($resumeArray)[5]." ".end($resumeArray)[6]." ".end($resumeArray)[7]." ".end($resumeArray)[8]." ".end($resumeArray)[9]. "<br>";
+
+            ob_start();
+            for ($i = 0; $i < $rCounter; $i++) {
+                echo '<div class="row">
+                        <div class="col-sm-2">
+                            <div class="thumbnail">
+                                <img class="img-responsive user-photo" src=' . $resumeArray[$i][7] . '>
+                            </div>
+                        </div>
+                        <div class="col-sm-10">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <strong>' . $resumeArray[$i][5] . '&nbsp;</strong>
+                                        <span class="text-muted">&nbsp; ' . $resumeArray[$i][2] . '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                                </div>
+                                <div class="panel-body">
+                                    ' . $resumeArray[$i][3] . '
+                                </div>
+                                <div class="panel-footer" style="text-align:right">
+                                    <span class="glyphicon glyphicon-chevron-up"></span>
+                                        ' . $resumeArray[$i][9] . '
+                                    <span class="glyphicon glyphicon-chevron-down"></span>
+                                </div>
+                            </div>
+                        </div>
+                     </div>';
+            }
+
+            $value = ob_get_contents();
+            ob_end_clean();
+            echo $value;
+
+            echo ' another line ';
+        } else {
+            echo 'There are no commments to display';
         }
-    }else{
-        echo 'There are no commments to display';
+    }catch (Exception $e){
+        echo $e->getMessage();
     }
-
 }
 
 ?>
@@ -311,9 +325,10 @@ function getAllCommentsAndVotes()
             <br>
         </div>
     </div>
+    <?php try{getAllCommentsAndVotes();}catch(Exception $e){echo $e->getMessage();} ?>
+    <?php echo ' the next line in the html part '; ?>
 
     <div class="row">
-        <?php getAllCommentsAndVotes() ?>
         <div class="col-sm-2">
             <div class="thumbnail">
                 <img class="img-responsive user-photo" src="https://www.filepicker.io/api/file/f107zsqaRgC9YQg3gYlG/convert?crop=0,280,718,718">
@@ -336,6 +351,9 @@ function getAllCommentsAndVotes()
             </div>
         </div>
     </div>
+
+    <?php echo ' after the nect comment part why doesnt this print'; ?>
+
     <div class="row">
         <div class="col-sm-2">
             <div class="thumbnail">
