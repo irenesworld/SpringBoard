@@ -50,7 +50,7 @@ class Membership
 
     function isLoggedIn(){
 
-        if($_SESSION['status'] != 'authorized'){
+        if(!isset($_SESSION['status']) || $_SESSION['status'] != 'authorized'){
             return false;
         }
         if(session_id() == '' || !isset($_SESSION)) {
