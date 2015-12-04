@@ -32,6 +32,7 @@ if (isset($_GET['idresume'])) {
 }
 */
 
+
 if ('POST' == $_SERVER['REQUEST_METHOD']) {
     if (isset($_POST['addComment'])) {
         $resumeURL = $_SESSION['resumeURL'];
@@ -80,7 +81,58 @@ $resumeArray = array();
 
 }*/
 
-function addVote($commentID, $boolean){
+if(isset($_GET['commentid'])) {
+    $commentID = strip_tags($_GET['commentid']) ;
+    $vote = strip_tags($_GET['vote']);
+
+    connect();
+    global $conn;
+    $query3 = "select positive from vote where idu = ? and idc = ?;";
+    $statment3 = mysqli_prepare($conn, $query3);
+
+    mysqli_stmt_bind_param($statment3, 'ii', $_SESSION['userid'], $commentID);
+    mysqli_stmt_execute($statment3);
+
+    $positive = "";
+    mysqli_stmt_bind_result($statment3, $positive);
+    mysqli_stmt_fetch($statment3);
+
+    if (!$statment3 ) {
+        die('mysqli error: '.mysqli_error($conn));
+    }
+    mysqli_stmt_close($statment3);
+
+    //if you havent voted yet
+    if (empty($positive)) {
+
+        if($vote){
+            $vote = 1;
+        }else{
+            $vote = 0;
+        }
+
+        $query4 = "insert into vote (idu, idc, positive) values(?,?,?)";
+        $statment4 = mysqli_prepare($conn, $query4);
+      
+        if ( !$statment4 ) {
+            die('mysqli error: '.mysqli_error($conn));
+        }
+
+        mysqli_stmt_bind_param($statment4, 'iii', $_SESSION['userid'], $commentID, $vote);
+        mysqli_stmt_execute($statment4);
+
+        mysqli_stmt_close($statment4);
+    }
+
+    close();
+}
+
+/*
+if (isset($_GET['commmentid'])) {
+    echo ' in fun';
+    $commentID = strip_tags($_GET['commentid']) ;
+    $vote = strip_tags($_GET['vote']);
+
     connect();
     global $conn;
     $query = "select positive from vote where idu = ? and idc = ?);";
@@ -101,7 +153,7 @@ function addVote($commentID, $boolean){
     //if you havent voted yet
     if (empty($positive)) {
 
-        if($boolean){
+        if($vote){
             $vote = 1;
         }else{
             $vote = 0;
@@ -109,6 +161,7 @@ function addVote($commentID, $boolean){
 
         $query2 = "insert into vote (idu, idc, positive) values(?,?,?)";
         $statment2 = mysqli_prepare($conn, $query2);
+        echo 'inserted';
         if ( !$statment2 ) {
             die('mysqli error: '.mysqli_error($conn));
         }
@@ -121,6 +174,7 @@ function addVote($commentID, $boolean){
 
     close();
 }
+*/
 
 ?>
 
@@ -283,8 +337,8 @@ function addVote($commentID, $boolean){
 
         if (!empty($resumeArray)) {
 
-           //for ($i = 0; $i < $rCounter; $i++) {
-               /*
+           for ($i = 0; $i < $rCounter; $i++) {
+
               $query2 = "select * from vote where idc = ?";
 
 
@@ -327,12 +381,12 @@ function addVote($commentID, $boolean){
               array_push($resumeArray[$i], $totalVotes);
           }
 
-          */
+
 
             $stri = "";
             //ob_start();
             for ($i = 0; $i < $rCounter; $i++) {
-                array_push($resumeArray[$i], 1);
+
                 $stri .= '<div class="row">
                         <div class="col-sm-2">
                             <div class="thumbnail">
@@ -349,9 +403,15 @@ function addVote($commentID, $boolean){
                                     ' . $resumeArray[$i][3] . '
                                 </div>
                                 <div class="panel-footer" style="text-align:right">
-                                    <span class="glyphicon glyphicon-chevron-up"></span>
-                                        ' . $resumeArray[$i][9] . '
-                                    <span class="glyphicon glyphicon-chevron-down"></span>
+                                 <form role="form" method="post" action="viewresumeinter.php" >
+                                     <a href="viewresume.php?commentid='.$resumeArray[$i][0].'&vote=true"><button type="button" class="btn btn-default">
+                                        <span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span>
+                                    </button></a>
+                                        <p>' . $resumeArray[$i][9] . '</p>
+                                    <a href="viewresume.php?commentid='.$resumeArray[$i][0].'&vote=false"<button type="button" class="btn btn-default">
+                                        <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
+                                    </button></a>
+                                </form>
                                 </div>
                             </div>
                         </div>
