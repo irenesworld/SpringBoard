@@ -168,7 +168,6 @@ if(isset($_POST['changePass'])) {
                 <p> </p>
                 <p> </p>
                 <p><b><?php echo $name ?></b></p>
-                <p><b>Votes: </b>11</p>
 
             </div>
         </div>

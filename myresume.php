@@ -77,7 +77,7 @@ function addResume($name, $url){
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>About</title>
+    <title>My Resumes</title>
     <meta charset="utf-8">
     <link rel="icon" type="image/png" href="images/favicon-32x32.png">
     <meta name="viewport" content="width=device-width, initial-scale=1">

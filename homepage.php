@@ -274,16 +274,16 @@ if(isset($_SESSION['userEmail'])) {
                 <div class="form-group">
                     <label for="name">Full name:</label>
                     <input type="text" class="form-control" name="name" id="name" placeholder="Full name">
-                    <span class="error"> <?php echo $nameError;?></span>
+                    <span class="text-danger"> <?php echo $nameError;?></span>
                 </div>
                 <div class="form-group">
                     <label for="emails">Email:</label>
                     <input type="text" class="form-control" name="email" id="email" placeholder="Email Address">
-                    <span class="error"> <?php echo $emailError;?></span>
+                    <span class="text-danger"> <?php echo $emailError;?></span>
                 </div>
                 <div class="form-group">
                     <label for="pwd">Password:</label>
-                    <input type="text" class="form-control" name="pwd" id="pwd" placeholder="Password">
+                    <input type="password" class="form-control" name="pwd" id="pwd" placeholder="Password">
                     <span class="error"> <?php echo $pwdError;?></span>
                 </div>
                 <div class="form-group">
@@ -291,12 +291,12 @@ if(isset($_SESSION['userEmail'])) {
                     <select class="form-control" name="university" id="university" placeholder="University">
                     <option>Lehigh University</option>
                         </select>
-                        <span class="error"> <?php echo $uniError;?></span>
+                        <span class="text-danger"> <?php echo $uniError;?></span>
                 </div>
                 <div class="form-group">
                     <label for="major">Major:</label>
                     <input type="text" class="form-control" name="major" id="major" placeholder="Major">
-                    <span class="error"> <?php echo $majorError;?></span>
+                    <span class="text-danger"> <?php echo $majorError;?></span>
                 </div>
                 <div style="text-align:right"><button class="btn btn-primary" type="submit" name="register" value="register">
                     Register
@@ -311,9 +311,6 @@ if(isset($_SESSION['userEmail'])) {
 </div>
 
 <br>
-<br>
-    <footer><p>C Irene Lau, Daniel Kramer</p></footer>
-</div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>

@@ -187,7 +187,7 @@ if (isset($_GET['commmentid'])) {
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-
+    <link rel="stylesheet" type="text/css" href="styling.css">
     <style>
         .thumbnail {
             padding:0px;
@@ -235,39 +235,28 @@ if (isset($_GET['commmentid'])) {
 </script>
 
 
-
-
-<div class="header">
-    <table align="center" width=100%>
-        <tr> <!-- ROW -->
-            <td> <!-- COLUMN -->
-                <img src="images/finallogo.png" width="300px" style="padding:5px"/>
-                <br>
-            </td>
-            <td>
-                <br>
-                <p align="right"><a href="logout.php">Sign out</a>&nbsp;</p>
-            </td>
-        </tr>
-    </table>
+<div class="custom-navbar">
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <img src="images/finallogo.png" width="250px">
+            </div>
+            <div>
+                <ul class="nav navbar-nav" >
+                    <li>&nbsp;&nbsp;&nbsp;</li>
+                    <li><a href="homepage.php">Home</a></li>
+                    <li><a href="aboutpage.html">About</a><li>
+                    <li><a href="profilepage.php">Profile</a></li>
+                    <li><a href="myresume.php">My Resumes</a></li>
+                    <li><a href="reviewresumes.php">Review Resumes</a><li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="logout.php">Sign out</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
 </div>
-
-<nav class="navbar navbar-inverse">
-    <div class="container-fluid">
-        <div class="navbar-header">
-        </div>
-        <div>
-            <ul class="nav navbar-nav" >
-                <li><a href="homepage.php">Home</a></li>
-                <li><a href="aboutpage.html">About</a><li>
-                <li><a href="profilepage.php">Profile</a></li>
-                <li><a href="myresume.php">My Resumes</a></li>
-                <li><a href="reviewresumes.php">Review Resumes</a><li>
-                <li><a href="#">Resources</a></li>
-            </ul>
-        </div>
-    </div>
-</nav>
 
 <div class="container">
     <br>
@@ -404,13 +393,13 @@ if (isset($_GET['commmentid'])) {
                                 </div>
                                 <div class="panel-footer" style="text-align:right">
                                  <form role="form" method="post" action="viewresumeinter.php" >
-                                     <a href="viewresume.php?commentid='.$resumeArray[$i][0].'&vote=true"><button type="button" class="btn btn-default">
+                                     <a href="viewresume.php?commentid='.$resumeArray[$i][0].'&vote=true">
                                         <span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span>
-                                    </button></a>
-                                        <p>' . $resumeArray[$i][9] . '</p>
-                                    <a href="viewresume.php?commentid='.$resumeArray[$i][0].'&vote=false"<button type="button" class="btn btn-default">
-                                        <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
-                                    </button></a>
+                                   </a>
+                                        &nbsp;&nbsp;' . $resumeArray[$i][9] . '&nbsp;&nbsp;
+                                    <a href="viewresume.php?commentid='.$resumeArray[$i][0].'&vote=false">
+                                      <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
+                                    </a>
                                 </form>
                                 </div>
                             </div>
