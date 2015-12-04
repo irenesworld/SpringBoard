@@ -14,6 +14,17 @@ if(!(isLoggedIn())){
     return;
 }
 
+if(isset($g))
+
+
+if(isset($_POST['addbutton']))
+{
+    $comment = htmlspecialchars($_POST['commentStr']);
+    echo $comment;
+
+}
+
+
 $resumeArray = array();
 
 //addCommentToResume(15, "Test comment. Do not upvote");
@@ -132,6 +143,7 @@ function addCommentToComment($resumeID, $commentID, $commentStr){
 */
 
 //getAllCommentsAndVotes();
+/*
 function getAllCommentsAndVotes()
 {
     try {
@@ -148,7 +160,11 @@ function getAllCommentsAndVotes()
         $idresume = "";
         if (isset($_GET['idresume'])) {
             $idresume = htmlspecialchars($_GET['idresume']);
+            $_SESSION['idresume'] = $idresume;
+        }else{
+            $idresume =  $_SESSION['idresume'];
         }
+        echo 'id resyme is '. $idresume;
 
         mysqli_stmt_bind_param($statment, 'i', $idresume);
         mysqli_stmt_execute($statment);
@@ -263,6 +279,7 @@ function getAllCommentsAndVotes()
         echo $e->getMessage();
     }
 }
+*/
 
 ?>
 
@@ -323,6 +340,8 @@ function getAllCommentsAndVotes()
 </script>
 
 
+
+
 <div class="header">
     <table align="center" width=100%>
         <tr> <!-- ROW -->
@@ -359,9 +378,12 @@ function getAllCommentsAndVotes()
     <br>
     <br>
     <?php
-        if(isset($_GET['resumeURL'])) {
+        $resumeURL = "";
+        if (isset($_GET['resumeURL'])) {
             $resumeURL = htmlspecialchars($_GET['resumeURL']);
-            //echo $resumeURL;
+            $_SESSION['resumeURL'] = $resumeURL;
+        }else{
+            $resumeURL =  $_SESSION['resumeURL'];
         }
     ?>
     <div type="filepicker-preview" data-fp-url="<?php echo $resumeURL ?>" style="text-align:center width:75%; height:500px"> </div>
@@ -390,6 +412,9 @@ function getAllCommentsAndVotes()
         $idresume = "";
         if (isset($_GET['idresume'])) {
             $idresume = htmlspecialchars($_GET['idresume']);
+            $_SESSION['idresume'] = $idresume;
+        }else{
+            $idresume =  $_SESSION['idresume'];
         }
 
         mysqli_stmt_bind_param($statment, 'i', $idresume);
@@ -548,19 +573,24 @@ function getAllCommentsAndVotes()
             </div>
         </div>
         <div class="col-sm-10">
-            <form class="form" role="form">
                 <div class="form-group">
-                    <textarea class="form-control" rows="3" placeholder="Comment"></textarea>
+                    <textarea class="form-control" rows="3" id="commentStr" placeholder="Comment"></textarea>
                 </div>
                 <div class="form-group" align="right">
-                    <button class="btn btn-default">Add</button>
+                    <button id="addbutton" name="addbutton">
+                        Add
+                    </button>
                 </div>
-            </form>
         </div>
     </div>
 
 
+
 </div>
 
+
+
 </body>
+
+
 </html>
