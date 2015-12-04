@@ -197,7 +197,7 @@ function viewByMajor(){
                 <ul class="nav navbar-nav" >
                     <li>&nbsp;&nbsp;&nbsp;</li>
                     <li><a href="homepage.php">Home</a></li>
-                    <li><a href="aboutpage.html">About</a><li>
+
                     <li><a href="profilepage.php">Profile</a></li>
                     <li><a href="myresume.php">My Resumes</a></li>
                     <li class="active"><a href="reviewresumes.php">Review Resumes</a><li>

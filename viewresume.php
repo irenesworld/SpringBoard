@@ -38,8 +38,8 @@ if ('POST' == $_SERVER['REQUEST_METHOD']) {
         $resumeURL = $_SESSION['resumeURL'];
         $idresume =  $_SESSION['idresume'];
         $commentStr = htmlspecialchars($_POST['message']);
-        echo $commentStr;
-        echo $idresume;
+        //echo $commentStr;
+        //echo $idresume;
 
         connect();
         global $conn;
@@ -56,7 +56,7 @@ if ('POST' == $_SERVER['REQUEST_METHOD']) {
 
         mysqli_stmt_close($statment);
 
-        echo 'hi';
+       // echo 'hi';
         // makes a positive vote for youself. Reddit style
         $positiveVote = 1;
         $query2 = "insert into vote (idu, idc, positive) values(?,?,?)";
@@ -64,12 +64,12 @@ if ('POST' == $_SERVER['REQUEST_METHOD']) {
         if (!$statment2) {
             die('mysqli error: ' . mysqli_error($conn));
         }
-        echo 'hello';
+       // echo 'hello';
         mysqli_stmt_bind_param($statment2, 'iii', $_SESSION['userid'], $newCommentID, $positiveVote);
         mysqli_stmt_execute($statment2);
 
         mysqli_stmt_close($statment2);
-        echo 'hm';
+        //echo 'hm';
         close();
     }
 }
@@ -420,6 +420,7 @@ if (isset($_GET['commmentid'])) {
         echo $e->getMessage();
     }?>
     </div>
+    <br><br>
     <div class="row">
         <div class="col-sm-2">
             <div class="thumbnail">
