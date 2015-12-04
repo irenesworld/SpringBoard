@@ -373,13 +373,13 @@ function addVote($commentID, $boolean){
     <div class="row">
         <div class="col-sm-2">
             <div class="thumbnail">
-                <img class="img-responsive user-photo" src="https://www.filepicker.io/api/file/TovycatBT52d3SCCIO93/convert?crop=341,0,1366,1366">
+                <img class="img-responsive user-photo" src="<?php echo $_SESSION['userPicture'] ?>">
             </div>
         </div>
         <div class="col-sm-10">
             <form role="form" method="post" action=<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?> >
                 <div class="form-group">
-                    <textarea name="message" rows="3" id="message" required></textarea>
+                    <textarea name="message" rows="3" id="message" style="width:100%" required></textarea>
                 </div>
                 <button type="submit" class="btn btn-primary pull-right" name="addComment">Add</button>
             </form>

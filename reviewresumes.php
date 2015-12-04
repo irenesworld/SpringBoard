@@ -19,7 +19,7 @@ if(!(isLoggedIn())){
 function viewByTimeStamp(){
     connect();
     global $conn;
-    $query = "SELECT ts, user.username, user.major, user.universityID, idresume, resume.name, resumeURL from user, resume where idresume != 24 and idresume != 23 and idresume != 22 and idresume != 19 and iduser = user_id order by ts DESC";
+    $query = "SELECT ts, user.username, user.major, user.universityID, idresume, resume.name, resumeURL from user, resume where idresume >= 25 and iduser = user_id order by ts DESC";
     $statment = mysqli_prepare($conn, $query);
     if ( !$statment ) {
         die('mysqli error: '.mysqli_error($conn));
@@ -72,7 +72,7 @@ function viewByTimeStamp(){
 function viewByName() {
     connect();
     global $conn;
-    $query = "SELECT ts, user.username, user.major, user.universityID, idresume, resume.name, resumeURL from user, resume where idresume != 24 and idresume != 23 and idresume != 22 idresume != 19 and and iduser = user_id order by user.username";
+    $query = "SELECT ts, user.username, user.major, user.universityID, idresume, resume.name, resumeURL from user, resume where idresume >= 25  and iduser = user_id order by user.username";
     $statment = mysqli_prepare($conn, $query);
     if ( !$statment ) {
         die('mysqli error: '.mysqli_error($conn));
@@ -116,7 +116,7 @@ function viewByName() {
 function viewByMajor(){
     connect();
     global $conn;
-    $query = "SELECT ts, user.username, user.major, user.universityID, idresume, resume.name, resumeURL from user, resume where idresume != 24 and idresume != 23 and idresume != 22 idresume != 19 and and user_id = iduser order by user.major";
+    $query = "SELECT ts, user.username, user.major, user.universityID, idresume, resume.name, resumeURL from user, resume where idresume >= 25 and and user_id = iduser order by user.major";
     $statment = mysqli_prepare($conn, $query);
     if ( !$statment ) {
         die('mysqli error: '.mysqli_error($conn));

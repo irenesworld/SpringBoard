@@ -103,7 +103,7 @@ function changePicture($pictureURL){
 
 if(isset($_GET['changepic'])) {
     $pictureURL = htmlspecialchars($_GET['changepic']);
-
+    $_SESSION['userPicture'] = $pictureURL;
     if(changePicture($pictureURL)){
         //it changed it
         echo $pictureURL;

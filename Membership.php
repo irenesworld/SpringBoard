@@ -14,7 +14,7 @@ class Membership
         connect();
         global $conn;
 
-        $query = "SELECT iduser FROM user WHERE email = ? AND password = ? LIMIT 1";
+        $query = "SELECT iduser, pictureURL FROM user WHERE email = ? AND password = ? LIMIT 1";
 
         $statment = mysqli_prepare($conn,$query);
         if ( !$statment ) {
@@ -24,10 +24,12 @@ class Membership
         mysqli_stmt_bind_param($statment, 'ss', $email, $password);
         mysqli_stmt_execute($statment);
 
+        $picture = "";
         $id = 0;
-        mysqli_stmt_bind_result($statment, $id);
+        mysqli_stmt_bind_result($statment, $id, $picture);
 
         if(mysqli_stmt_fetch($statment)){
+            $_SESSION['userPicture'] = $picture;
             mysqli_stmt_close($statment);
             return $id;
         }else{
