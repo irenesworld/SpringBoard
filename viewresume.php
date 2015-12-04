@@ -50,6 +50,49 @@ function addCommentToResume($resumeID, $commentStr){
     close();
 }
 
+function addVote($commentID, $boolean){
+    connect();
+    global $conn;
+    $query = "select positive from vote where idu = ? and idc = ?);";
+    $statment = mysqli_prepare($conn, $query);
+
+    mysqli_stmt_bind_param($statment, 'ii', $_SESSION['userid'], $commentID);
+    mysqli_stmt_execute($statment);
+
+    $positive = "";
+    mysqli_stmt_bind_result($statment, $positive);
+    mysqli_stmt_fetch($statment);
+
+    if (!$statment ) {
+        die('mysqli error: '.mysqli_error($conn));
+    }
+    mysqli_stmt_close($statment);
+
+    //if you havent voted yet
+    if (empty($positive)) {
+
+        if($boolean){
+            $vote = 1;
+        }else{
+            $vote = 0;
+        }
+
+        $query2 = "insert into vote (idu, idc, positive) values(?,?,?)";
+        $statment2 = mysqli_prepare($conn, $query2);
+        if ( !$statment2 ) {
+            die('mysqli error: '.mysqli_error($conn));
+        }
+
+        mysqli_stmt_bind_param($statment2, 'iii', $_SESSION['userid'], $commentID, $vote);
+        mysqli_stmt_execute($statment2);
+
+        mysqli_stmt_close($statment2);
+    }
+
+    close();
+}
+
+
 /*
 function addCommentToComment($resumeID, $commentID, $commentStr){
     connect();
