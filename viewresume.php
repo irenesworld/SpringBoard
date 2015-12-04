@@ -14,7 +14,6 @@ if(!(isLoggedIn())){
     return;
 }
 
-if(isset($g))
 
 
 if(isset($_POST['addbutton']))
@@ -573,14 +572,7 @@ function getAllCommentsAndVotes()
             </div>
         </div>
         <div class="col-sm-10">
-                <div class="form-group">
-                    <textarea class="form-control" rows="3" id="commentStr" placeholder="Comment"></textarea>
-                </div>
-                <div class="form-group" align="right">
-                    <button id="addbutton" name="addbutton">
-                        Add
-                    </button>
-                </div>
+
         </div>
     </div>
 
