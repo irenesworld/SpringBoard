@@ -19,7 +19,7 @@ if(!(isLoggedIn())){
 function viewByTimeStamp(){
     connect();
     global $conn;
-    $query = "SELECT ts, user.username, user.major, user.universityID, idresume, resume.name, resumeURL from user, resume where iduser = user_id order by ts DESC";
+    $query = "SELECT ts, user.username, user.major, user.universityID, idresume, resume.name, resumeURL from user, resume where idresume != 24 and idresume != 23 and idresume != 22 and idresume != 19 and iduser = user_id order by ts DESC";
     $statment = mysqli_prepare($conn, $query);
     if ( !$statment ) {
         die('mysqli error: '.mysqli_error($conn));
@@ -41,28 +41,30 @@ function viewByTimeStamp(){
     }
 
     // maybe change table
-    foreach($resumeArray as &$row2) {
+    $str = "";
+    foreach($resumeArray as $row2) {
         //echo $row2[4]. "&resumeURL=" . $row2[6];
-        echo "<a href='viewresume.php?idresume=". $row2[4]. "&resumeURL=" . $row2[6] . "' class='list-group-item'>";
-         echo "<div class='row'>";
-                echo "<div class='col-md-3'>";
-                echo $row2[0] . "</div>";
-         echo "<div class='col-md-2'>";
-         echo $row2[1] . "</div>";
-         echo "<div class='col-md-2'>";
-         echo $row2[2] . "</div>";
-         //echo "<div class='col-md-2'>";
-         echo "Lehigh University";
-         //echo "<div class='col-md-3'>";
-         //echo $row2[4] . "</div>";
-         echo "</div></a>";
+        $str .=
+             "<a href='viewresume.php?idresume=". $row2[4]. "&resumeURL=" . $row2[6] . "' class='list-group-item'>"
+             ."<div class='row'>"
+              . "<div class='col-md-3'>"
+                . $row2[0] . "</div>"
+         . "<div class='col-md-2'>"
+         . $row2[1] . "</div>"
+         . "<div class='col-md-2'>"
+         . $row2[2] . "</div>"
+         //."<div class='col-md-2'>"
+         //."Lehigh University"
+         //. "<div class='col-md-3'>"
+         //. $row2[4] . "</div>"
+         . "</div></a>";
         /* echo $row2[0];
          echo $row2[1];
          echo $row2[2];
          echo $row2[4];
          echo $row2[5];*/
     }
-
+    echo($str);
     mysqli_stmt_close($statment);
     close();
 }
@@ -70,7 +72,7 @@ function viewByTimeStamp(){
 function viewByName() {
     connect();
     global $conn;
-    $query = "SELECT ts, user.username, user.major, user.universityID, idresume, resume.name, resumeURL from user, resume where iduser = user_id order by user.username";
+    $query = "SELECT ts, user.username, user.major, user.universityID, idresume, resume.name, resumeURL from user, resume where idresume != 24 and idresume != 23 and idresume != 22 idresume != 19 and and iduser = user_id order by user.username";
     $statment = mysqli_prepare($conn, $query);
     if ( !$statment ) {
         die('mysqli error: '.mysqli_error($conn));
@@ -114,7 +116,7 @@ function viewByName() {
 function viewByMajor(){
     connect();
     global $conn;
-    $query = "SELECT ts, user.username, user.major, user.universityID, idresume, resume.name, resumeURL from user, resume where user_id = iduser order by user.major";
+    $query = "SELECT ts, user.username, user.major, user.universityID, idresume, resume.name, resumeURL from user, resume where idresume != 24 and idresume != 23 and idresume != 22 idresume != 19 and and user_id = iduser order by user.major";
     $statment = mysqli_prepare($conn, $query);
     if ( !$statment ) {
         die('mysqli error: '.mysqli_error($conn));

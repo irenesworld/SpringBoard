@@ -282,53 +282,58 @@ function addVote($commentID, $boolean){
 
 
         if (!empty($resumeArray)) {
-            for ($i = 0; $i < $rCounter; $i++) {
-                $query2 = "select * from vote where idc = ?";
+
+           //for ($i = 0; $i < $rCounter; $i++) {
+               /*
+              $query2 = "select * from vote where idc = ?";
 
 
-                $statment2 = mysqli_prepare($conn, $query2);
-                if (!$statment2) {
-                    die('mysqli error: ' . mysqli_error($conn));
-                }
+              $statment2 = mysqli_prepare($conn, $query2);
+              if (!$statment2) {
+                  die('mysqli error: ' . mysqli_error($conn));
+              }
 
-                mysqli_stmt_bind_param($statment2, 'i', $resumeArray[$i][0]);
-                mysqli_stmt_execute($statment2);
+              mysqli_stmt_bind_param($statment2, 'i', $resumeArray[$i][0]);
+              mysqli_stmt_execute($statment2);
 
-                $idc = "";
-                $idu = "";
-                $postive = "";
-                mysqli_stmt_bind_result($statment2, $idc, $idu, $postive);
+              $idc = "";
+              $idu = "";
+              $postive = "";
+              mysqli_stmt_bind_result($statment2, $idc, $idu, $postive);
 
-                $vCounter = 0;
-                while (mysqli_stmt_fetch($statment2)) {
-                    $voteArray[$vCounter] = array($idc, $idu, $postive);
-                    $vCounter++;
-                }
-                mysqli_stmt_close($statment2);
+              $vCounter = 0;
+              while (mysqli_stmt_fetch($statment2)) {
+                  $voteArray[$vCounter] = array($idc, $idu, $postive);
+                  $vCounter++;
+              }
+              mysqli_stmt_close($statment2);
 
-                if (!empty($voteArray)) {
-                    $totalUpVote = 0;
-                    $totalDownVote = 0;
+              if (!empty($voteArray)) {
+                  $totalUpVote = 0;
+                  $totalDownVote = 0;
 
-                    for ($j = 0; $j < $vCounter; $j++) {
-                        if ($voteArray[$j][2] == 1) {
-                            $totalUpVote++;
-                        } else {
-                            $totalDownVote++;
-                        }
-                    }
+                  for ($j = 0; $j < $vCounter; $j++) {
+                      if ($voteArray[$j][2] == 1) {
+                          $totalUpVote++;
+                      } else {
+                          $totalDownVote++;
+                      }
+                  }
 
-                    $totalVotes = $totalUpVote - $totalDownVote;
-                } else {
-                    $totalVotes = 0;
-                }
-                array_push($resumeArray[$i], $totalVotes);
-            }
+                  $totalVotes = $totalUpVote - $totalDownVote;
+              } else {
+                  $totalVotes = 0;
+              }
+              array_push($resumeArray[$i], $totalVotes);
+          }
+
+          */
 
             $stri = "";
-            ob_start();
+            //ob_start();
             for ($i = 0; $i < $rCounter; $i++) {
-                echo '<div class="row">
+                array_push($resumeArray[$i], 1);
+                $stri .= '<div class="row">
                         <div class="col-sm-2">
                             <div class="thumbnail">
                                 <img class="img-responsive user-photo" src=' . $resumeArray[$i][7] . '>
@@ -353,10 +358,10 @@ function addVote($commentID, $boolean){
                      </div>';
             }
 
-            $value = ob_get_contents();
-            ob_end_clean();
-            echo $value;
-            //var_dump($stri);
+            //$value = ob_get_contents();
+            //ob_end_clean();
+            //echo $value;
+            echo($stri);
 
         } else {
             echo 'There are no commments to display';
