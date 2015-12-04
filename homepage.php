@@ -30,7 +30,7 @@ $loginPwdError = "";
 if(isset($_POST['signin'])) {
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (empty($_POST["loginEmail"]) || !filter_var($_POST['loginEmail'], FILTER_VALIDATE_EMAIL)) {
-            $loginEmailError = "Name is required";
+            $loginEmailError = "Email is required";
         } else {
             $loginEmail = htmlspecialchars($_POST["loginEmail"]);
         }
@@ -67,7 +67,11 @@ if(isset($_POST['register']))
 
         if (empty($_POST["email"])) {
             $emailError = "Email is required";
-        } else {
+        }else if(!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
+            $emailError = "Not a valid email";
+        }else if(!preg_match('/@lehigh.edu/',$_POST['email'])) {
+            $emailError = "Sorry, only Lehigh University emails are allowed.";
+        }else{
             $email = htmlspecialchars($_POST["email"]);
         }
 
