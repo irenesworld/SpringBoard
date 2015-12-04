@@ -39,26 +39,28 @@ function viewByTimeStamp(){
     while ($row = mysqli_stmt_fetch($statment)) {
         $resumeArray[] = array($timeStamp, $userName, $userMajor, $userUni, $idresume, $fileName, $resumeURL);
     }
+
     // maybe change table
     foreach($resumeArray as &$row2) {
+        //echo $row2[4]. "&resumeURL=" . $row2[6];
         echo "<a href='viewresume.php?idresume=". $row2[4]. "&resumeURL=" . $row2[6] . "' class='list-group-item'>";
-        echo "<div class='row'>";
-        echo "<div class='col-md-3'>";
-        echo $row2[0] . "</div>";
-        echo "<div class='col-md-2'>";
-        echo $row2[1] . "</div>";
-        echo "<div class='col-md-2'>";
-        echo $row2[2] . "</div>";
-       // echo "<div class='col-md-2'>";
-       // echo "Lehigh University</div>";
-        echo "<div class='col-md-3'>";
-        echo $row2[4] . "</div>";
-        echo "</div></a>";
-       /* echo $row2[0];
-        echo $row2[1];
-        echo $row2[2];
-        echo $row2[4];
-        echo $row2[5];*/
+         echo "<div class='row'>";
+                echo "<div class='col-md-3'>";
+                echo $row2[0] . "</div>";
+         echo "<div class='col-md-2'>";
+         echo $row2[1] . "</div>";
+         echo "<div class='col-md-2'>";
+         echo $row2[2] . "</div>";
+         //echo "<div class='col-md-2'>";
+         echo "Lehigh University";
+         //echo "<div class='col-md-3'>";
+         //echo $row2[4] . "</div>";
+         echo "</div></a>";
+        /* echo $row2[0];
+         echo $row2[1];
+         echo $row2[2];
+         echo $row2[4];
+         echo $row2[5];*/
     }
 
     mysqli_stmt_close($statment);

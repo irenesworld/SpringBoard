@@ -15,7 +15,7 @@ if(!(isLoggedIn())){
 }
 
 
-
+/*
 $resumeURL = "";
 if (isset($_GET['resumeURL'])) {
     $resumeURL = htmlspecialchars($_GET['resumeURL']);
@@ -30,9 +30,12 @@ if (isset($_GET['idresume'])) {
 }else{
     $idresume =  $_SESSION['idresume'];
 }
+*/
 
 if ('POST' == $_SERVER['REQUEST_METHOD']) {
     if (isset($_POST['addComment'])) {
+        $resumeURL = $_SESSION['resumeURL'];
+        $idresume =  $_SESSION['idresume'];
         $commentStr = htmlspecialchars($_POST['message']);
         echo $commentStr;
         echo $idresume;
@@ -215,7 +218,15 @@ function addVote($commentID, $boolean){
 <div class="container">
     <br>
     <br>
-
+    <?php
+    $resumeURL = "";
+    if (isset($_GET['resumeURL'])) {
+        $resumeURL = htmlspecialchars($_GET['resumeURL']);
+        $_SESSION['resumeURL'] = $resumeURL;
+    }else {
+        $resumeURL = $_SESSION['resumeURL'];
+    }
+    ?>
     <div type="filepicker-preview" data-fp-url="<?php echo $resumeURL ?>" style="text-align:center width:75%; height:500px"> </div>
     <div class="row">
         <div class="col-sm-12">
@@ -226,6 +237,15 @@ function addVote($commentID, $boolean){
     </div>
     <div class="populating">
     <?php  try {
+
+        $idresume = "";
+        if (isset($_GET['idresume'])) {
+            $idresume = htmlspecialchars($_GET['idresume']);
+            $_SESSION['idresume'] = $idresume;
+        }else{
+            $idresume =  $_SESSION['idresume'];
+        }
+
         connect();
         global $conn;
 
@@ -336,7 +356,7 @@ function addVote($commentID, $boolean){
             $value = ob_get_contents();
             ob_end_clean();
             echo $value;
-            var_dump($stri);
+            //var_dump($stri);
 
         } else {
             echo 'There are no commments to display';
